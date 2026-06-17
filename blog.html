@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog – Stackly EV Charging Solutions</title>
+  <meta name="description" content="Stay ahead of the curve — explore Stackly's latest insights on EV charging trends, fleet sustainability, and smart home charging strategies." />
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/logo.webp" alt="Stackly logo" />
+      </a>
+      <ul class="navbar__nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="service.html">Service</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="signin.html">Sign In</a></li>
+        <li><a href="signup.html" class="btn navbar__btn">Get Started</a></li>
+      </ul>
+      <button class="navbar__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="mobile-menu__glow" aria-hidden="true"></div>
+    <nav class="mobile-menu__links" aria-label="Mobile navigation">
+      <a href="index.html" onclick="closeMobile()">Home</a>
+      <a href="about.html" onclick="closeMobile()">About Us</a>
+      <a href="service.html" onclick="closeMobile()">Service</a>
+      <a href="blog.html" onclick="closeMobile()" class="active">Blog</a>
+      <a href="contact.html" onclick="closeMobile()">Contact</a>
+      <a href="signin.html" onclick="closeMobile()">Sign In</a>
+      <a href="signup.html" onclick="closeMobile()">Get Started</a>
+    </nav>
+  </div>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="blog-hero" data-section="blog-hero">
+      <div class="container">
+        <div class="svc-hero__badge" data-animate="fade">
+          <span class="svc-hero__badge-dot" aria-hidden="true"></span>
+          Latest EV Insights
+        </div>
+        <h1 class="blog-hero__title" data-animate>
+          Stay ahead of the <em>electric revolution</em>
+        </h1>
+        <p class="blog-hero__sub" data-animate>
+          Expert analysis, practical guides, and the latest trends shaping the future of EV charging — written for businesses and drivers alike.
+        </p>
+        <div class="svc-hero__actions" data-animate>
+          <a href="contact.html" class="btn btn-primary">Subscribe Free</a>
+          <a href="#blog-grid" class="btn btn-outline-white">Browse All Posts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED POST BAND -->
+    <section class="service-img-band bg-light" aria-label="Featured article">
+      <div class="container">
+        <div class="service-img-band__grid">
+          <div data-animate="left">
+            <img src="assets/ev_smart_tech.webp" alt="Smart EV Technology" class="service-img-band__img" />
+          </div>
+          <div class="service-img-band__content" data-animate="right">
+            <span class="section-label">Featured Article</span>
+            <h2>The <em>smart grid</em> revolution: How V2G is reshaping energy</h2>
+            <p>Vehicle-to-Grid technology allows EVs to become mobile energy storage units — selling power back to the grid during peak demand. Stackly's V2G-ready hardware makes this future accessible today.</p>
+            <ul class="service-img-band__list">
+              <li>Bi-directional energy flow explained</li>
+              <li>Financial benefits for fleet operators</li>
+              <li>BIS-certified V2G hardware from Stackly</li>
+              <li>How to enroll in grid stabilisation programs</li>
+            </ul>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:6px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:var(--c-primary);display:flex;align-items:center;justify-content:center;color:white;font-size:0.75rem;font-weight:700;font-family:var(--f-heading);">AK</div>
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--c-dark);">Arjun Krishnamurthy</div>
+                <div style="font-size:0.75rem;color:var(--c-text-light);">Jun 14, 2026 · 10 min read</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG GRID -->
+    <section class="blog-section" id="blog-grid" aria-labelledby="blog-grid-heading">
+      <div class="container">
+        <header class="blog-section__header" data-animate="fade">
+          <span class="section-label">Recent Articles</span>
+          <h2 class="blog-section__title" id="blog-grid-heading">Fresh from the <em>Stackly newsroom</em></h2>
+          <p class="blog-section__desc">Six must-read pieces on fast charging technology, fleet sustainability, and smarter home energy management.</p>
+        </header>
+        <div class="blog-grid" data-stagger style="grid-template-columns: repeat(3, 1fr); gap: 18px;">
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=600&q=80" alt="EV charging station" />
+              <span class="blog-card__read-time">6 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Technology</span>
+              <h3 class="blog-card__title">The Future of Fast Charging: What's Next for 2026?</h3>
+              <p class="blog-card__desc">800V architectures, bidirectional V2G capability, and ultra-rapid 350kW corridors are no longer concepts — they're arriving now.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">SR</div>
+                <div>
+                  <div class="blog-card__author">Suresh R.</div>
+                  <div class="blog-card__date">Jun 12, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80" alt="Smart city" />
+              <span class="blog-card__read-time">8 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Infrastructure</span>
+              <h3 class="blog-card__title">Smart City EV Integration: Building the Grid of Tomorrow</h3>
+              <p class="blog-card__desc">How cities are adapting their infrastructure to support the growing wave of electric vehicles and charging stations.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">PK</div>
+                <div>
+                  <div class="blog-card__author">Priya K.</div>
+                  <div class="blog-card__date">Jun 8, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1647427060118-4911c9821b82?w=600&q=80" alt="Home EV charging" />
+              <span class="blog-card__read-time">5 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Home</span>
+              <h3 class="blog-card__title">Complete Guide to Home EV Charging in India</h3>
+              <p class="blog-card__desc">Everything you need to know about installing a home charger — costs, requirements, best practices, and scheduling tips.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">AM</div>
+                <div>
+                  <div class="blog-card__author">Arjun M.</div>
+                  <div class="blog-card__date">Jun 3, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80" alt="Fleet vehicles" />
+              <span class="blog-card__read-time">7 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Fleet</span>
+              <h3 class="blog-card__title">Fleet Sustainability: Electrifying Your Commercial Fleet</h3>
+              <p class="blog-card__desc">A practical roadmap for fleet managers transitioning to electric — from depot planning to driver training and ROI analysis.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">VR</div>
+                <div>
+                  <div class="blog-card__author">Vikram R.</div>
+                  <div class="blog-card__date">May 28, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=600&q=80" alt="V2G technology" />
+              <span class="blog-card__read-time">9 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Innovation</span>
+              <h3 class="blog-card__title">V2G Technology: When Your EV Pays You Back</h3>
+              <p class="blog-card__desc">Vehicle-to-Grid technology lets your EV sell energy back to the grid. Learn how Stackly's V2G-ready hardware makes it possible.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">SN</div>
+                <div>
+                  <div class="blog-card__author">Sneha N.</div>
+                  <div class="blog-card__date">May 22, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="blog-card" data-animate="fade">
+            <div class="blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80" alt="Battery innovation" />
+              <span class="blog-card__read-time">6 min read</span>
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__category">Technology</span>
+              <h3 class="blog-card__title">EV Battery Innovation: Solid-State and Beyond</h3>
+              <p class="blog-card__desc">Solid-state batteries promise faster charging, longer range, and safer performance. Here's what the latest research means for EV owners.</p>
+            </div>
+            <div class="blog-card__footer">
+              <div class="blog-card__meta">
+                <div class="blog-card__avatar">AK</div>
+                <div>
+                  <div class="blog-card__author">Arjun K.</div>
+                  <div class="blog-card__date">May 15, 2026</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="newsletter" aria-labelledby="newsletter-heading">
+      <div class="container">
+        <div class="newsletter__inner" data-animate="fade">
+          <div class="newsletter__copy">
+            <h2 class="newsletter__title" id="newsletter-heading">Get EV insights <em>delivered</em></h2>
+            <p class="newsletter__sub">New articles, industry news, and Stackly product updates — straight to your inbox, no spam.</p>
+          </div>
+          <div class="newsletter__form">
+            <input type="email" class="newsletter__input" placeholder="your@email.com" aria-label="Enter your email address" />
+            <button type="button" class="newsletter__btn" aria-label="Subscribe to newsletter">
+              Subscribe
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta-banner__inner" data-animate="fade">
+          <span class="section-label" style="color:#93c5fd;">Start Today</span>
+          <h2 class="cta-banner__title" id="cta-heading">Power up your site with <em>Stackly EV Charging</em></h2>
+          <p class="cta-banner__sub">Join 500+ businesses already running Stackly stations. Zero upfront hardware cost on our Enterprise plan.</p>
+          <div class="cta-banner__actions">
+            <a href="contact.html" class="btn btn-primary">Get Charging</a>
+            <a href="contact.html" class="btn btn-outline-white">Schedule a Demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- UNIFIED FOOTER -->
+  <footer class="footer">
+    <div class="footer__main">
+      <div class="container">
+        <div class="footer__grid">
+          <div>
+            <div class="footer__brand-logo">
+              <img src="assets/logo.webp" alt="Stackly logo" />
+            </div>
+            <p class="footer__tagline">Leading developer of intelligent EV charging infrastructure for businesses, fleets, and commercial spaces across India.</p>
+            <address class="footer__address">
+              <span class="footer__address-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <span>MMR Complex, Chinna Thirupathi,<br />near Chinna Muniyappan Kovil,<br />Salem, Tamil Nadu 636008</span>
+            </address>
+            <div class="footer__socials">
+              <a href="404.html" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg></a>
+              <a href="404.html" aria-label="Twitter / X"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a href="404.html" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+              <a href="404.html" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            </div>
+          </div>
+          <nav aria-label="Quick links">
+            <h3 class="footer__col-title">Quick Links</h3>
+            <ul class="footer__links" role="list">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="service.html">Services</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Services links">
+            <h3 class="footer__col-title">Services</h3>
+            <ul class="footer__links" role="list">
+              <li><a href="404.html">Home Charging</a></li>
+              <li><a href="404.html">Public Charging</a></li>
+              <li><a href="404.html">Commercial Stations</a></li>
+              <li><a href="404.html">Fleet Management</a></li>
+              <li><a href="404.html">Maintenance &amp; Support</a></li>
+              <li><a href="404.html">API &amp; Integrations</a></li>
+            </ul>
+          </nav>
+          <div>
+            <h3 class="footer__col-title">Stay Updated</h3>
+            <p style="font-size: 0.82rem; color: rgba(255,255,255,0.62); margin-bottom: 16px; line-height: 1.5;">Stay updated on EV trends. No spam. Unsubscribe anytime.</p>
+            <div class="footer__newsletter-column">
+              <input type="email" class="footer__newsletter-input" placeholder="your@email.com" aria-label="Email for newsletter" />
+              <button class="footer__newsletter-btn" type="button">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <p class="footer__copy">&copy; <span id="year"></span> Stackly EV Solutions. All rights reserved.</p>
+          <nav class="footer__legal" aria-label="Legal links">
+            <a href="404.html">Privacy Policy</a>
+            <a href="404.html">Terms of Service</a>
+            <a href="404.html">Cookie Settings</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="go-top" id="goTop" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

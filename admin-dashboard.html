@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Admin Dashboard — Stackly EV Charging" />
+  <meta name="theme-color" content="#1F6EFA" />
+  <title>Admin Dashboard — Stackly EV Charging</title>
+
+  <link rel="icon" type="image/webp" href="assets/top-logo.webp" />
+  <link rel="apple-touch-icon" href="assets/logo.webp" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --clr-primary:       #1F6EFA;
+      --clr-primary-light: #4D8FFF;
+      --clr-primary-pale:  #EBF2FF;
+      --clr-accent:        #f0a500;
+      --clr-accent-light:  #FFF8E1;
+      --clr-secondary-blue: #2196F3;
+      --clr-secondary-purple: #9C27B0;
+      --clr-secondary-red: #EF5350;
+      --clr-white:  #FFFFFF;
+      --clr-bg:     #F0F4FF;
+      --clr-bg-alt: #F5F8FF;
+      --clr-surface:#FFFFFF;
+      --clr-border: #CBD5E0;
+      --clr-text-dark:  #1F2029;
+      --clr-text-body:  #2D3748;
+      --clr-text-muted: #718096;
+      --clr-text-light: #718096;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', 'Segoe UI', sans-serif;
+      --r-sm:   8px;
+      --r-md:   14px;
+      --r-lg:   20px;
+      --r-xl:   32px;
+      --r-full: 9999px;
+      --shadow-sm:    0 2px 8px  rgba(13,31,45,0.06);
+      --shadow-md:    0 6px 24px rgba(13,31,45,0.10);
+      --shadow-lg:    0 16px 48px rgba(13,31,45,0.13);
+      --shadow-green: 0 8px 32px rgba(31,110,250,0.22);
+      --ease:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+      --dur-fast: 0.18s;
+      --dur-base: 0.32s;
+      --sidebar-w: 260px;
+      --topbar-h:  68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+    body {
+      font-family: var(--font-body);
+      background: var(--clr-bg);
+      color: var(--clr-text-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    .dash-layout { display: flex; min-height: 100vh; }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13,31,45,0.55);
+      z-index: 299;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-overlay.active { display: block; }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #1F2029 0%, #15161D 100%);
+      background: linear-gradient(180deg, var(--clr-primary) 0%, #0D4FAA 100%);
+      background: linear-gradient(180deg, #1A1D2E 0%, #12131A 100%);
+      height: calc(100vh - var(--topbar-h));
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: var(--topbar-h);
+      left: 0;
+      bottom: 0;
+      z-index: 300;
+      transition: transform var(--dur-base) var(--ease);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+    .sidebar__user {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(31,110,250,0.12);
+      background: rgba(0,0,0,0.15);
+    }
+    .sidebar__user-inner { display: flex; align-items: center; gap: 0.75rem; }
+    .sidebar__avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0;
+    }
+    .sidebar__user-info { min-width: 0; flex: 1; }
+    .sidebar__user-label {
+      font-size: 0.62rem; letter-spacing: 1.2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 3px;
+    }
+    .sidebar__user-name {
+      font-weight: 700; font-size: 0.88rem; color: #fff;
+      line-height: 1.3;
+      word-break: break-word; overflow-wrap: break-word;
+    }
+    .sidebar__user-email {
+      font-size: 0.72rem; color: var(--clr-primary-light);
+      word-break: break-all; overflow-wrap: break-word; line-height: 1.35;
+    }
+    .sidebar__user-role {
+      display: inline-flex; align-items: center; gap: 4px; margin-top: 6px;
+      background: rgba(255,179,0,0.18); border: 1px solid rgba(255,179,0,0.3);
+      color: var(--clr-accent); font-size: 0.65rem; font-weight: 700;
+      padding: 3px 10px; border-radius: var(--r-full);
+      letter-spacing: 0.06em; text-transform: uppercase; flex-shrink: 0;
+    }
+
+    .sidebar__nav { flex: 1; padding: 1rem 0.75rem; }
+    .sidebar__nav-section { margin-bottom: 1.5rem; }
+    .sidebar__nav-section-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      padding: 0 0.75rem; margin-bottom: 0.4rem;
+    }
+    .sidebar__nav-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 0.75rem; border-radius: var(--r-md);
+      font-size: 0.875rem; font-weight: 500; color: rgba(255,255,255,0.55);
+      cursor: pointer; transition: all var(--dur-fast) var(--ease);
+      position: relative; text-decoration: none; user-select: none;
+    }
+    .sidebar__nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+    .sidebar__nav-item.active {
+      background: linear-gradient(135deg, rgba(31,110,250,0.4) 0%, rgba(31,110,250,0.2) 100%);
+      color: #6DB3FF; font-weight: 600;
+      background: rgba(0,0,0,0.2);
+      color: #fff; font-weight: 600;
+    }
+    .sidebar__nav-item.active::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 3px; background: var(--clr-primary-light); border-radius: 0 3px 3px 0;
+      width: 3px; background: var(--clr-accent); border-radius: 0 3px 3px 0;
+    }
+    .sidebar__nav-item i { width: 20px; text-align: center; font-size: 0.95rem; flex-shrink: 0; }
+    .sidebar__nav-badge {
+      margin-left: auto; background: var(--clr-accent); color: #1A1A00;
+      font-size: 0.65rem; font-weight: 800; padding: 0.1rem 0.45rem; border-radius: var(--r-full);
+    }
+    .sidebar__nav-badge.red { background: #E53E3E; color: #fff; }
+
+    .sidebar__bottom { padding: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .sidebar__logout {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem;
+      border-radius: var(--r-md); font-size: 0.875rem; font-weight: 600;
+      color: rgba(255,107,107,0.7); cursor: pointer;
+      transition: all var(--dur-fast) var(--ease); width: 100%; text-align: left;
+    }
+    .sidebar__logout:hover { background: rgba(229,62,62,0.12); color: #FC8181; }
+    .sidebar__logout i { width: 20px; text-align: center; }
+
+    .dash-main { margin-left: var(--sidebar-w); flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 100vh; }
+
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      width: 100%;
+      height: var(--topbar-h);
+      background: #1F2029;
+      background: var(--clr-primary);
+      background: #1A1D2E;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 1rem;
+      z-index: 400;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    }
+
+    .topbar__hamburger {
+      display: none; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: var(--r-sm);
+      background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 1.05rem; cursor: pointer; flex-shrink: 0;
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .topbar__hamburger:hover { background: rgba(255,255,255,0.2); }
+
+    .topbar__logo-zone {
+      width: calc(var(--sidebar-w) - 40px);
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .topbar__logo {
+      display: flex; align-items: center; flex-shrink: 0; text-decoration: none;
+    }
+    .topbar__logo img { height: 44px; width: auto; max-width: 150px; object-fit: contain; }
+
+    .topbar__divider {
+      width: 1.5px; height: 38px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 2px; flex-shrink: 0;
+    }
+
+    .topbar__meta { flex: 1; min-width: 0; overflow: hidden; }
+    .topbar__page-title {
+      font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700;
+      color: #fff; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .topbar__page-title span { color: var(--clr-accent); }
+    .topbar__breadcrumb {
+      font-size: 0.75rem; color: rgba(255,255,255,0.5);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .topbar__actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+    .topbar__icon-btn {
+      width: 38px; height: 38px; border-radius: var(--r-sm);
+      background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.18);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all var(--dur-fast) var(--ease);
+      position: relative; font-size: 0.95rem;
+    }
+    .topbar__icon-btn:hover { background: rgba(255,255,255,0.22); transform: scale(1.08); }
+    .topbar__notif-dot {
+      position: absolute; top: 6px; right: 6px; width: 7px; height: 7px;
+      background: #E53E3E; border-radius: 50%; border: 1.5px solid #1F6EFA;
+      background: #E53E3E; border-radius: 50%; border: 1.5px solid var(--clr-primary);
+    }
+
+    .dash-content-wrap { padding-top: var(--topbar-h); }
+
+    .dash-content {
+      padding: 1.75rem 1.5rem 2.5rem;
+      flex: 1; max-width: 1400px; width: 100%;
+    }
+
+    .section-panel { display: none; }
+    .section-panel.active { display: block; }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 60%, var(--clr-accent) 100%);
+      border-radius: var(--r-xl); padding: 1.75rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; margin-bottom: 1.75rem; overflow: hidden; position: relative;
+      border: none;
+    }
+    .welcome-banner::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(255,179,0,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .welcome-banner__text { position: relative; z-index: 1; min-width: 0; flex: 1; }
+    .welcome-banner__tag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+      color: #fff; font-size: 0.72rem; font-weight: 600;
+      padding: 0.25rem 0.7rem; border-radius: var(--r-full);
+      margin-bottom: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .welcome-banner__tag i { color: var(--clr-accent); }
+    .welcome-banner__title {
+      font-family: var(--font-heading); font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 0.35rem;
+      word-break: break-word; overflow-wrap: break-word;
+    }
+    .welcome-banner__title span { color: var(--clr-accent); }
+    .welcome-banner__sub { font-size: 0.85rem; color: rgba(255,255,255,0.72); word-break: break-all; }
+    .welcome-banner__actions {
+      display: flex; gap: 0.75rem; flex-shrink: 0;
+      position: relative; z-index: 1; flex-wrap: wrap; justify-content: flex-end;
+    }
+    .welcome-banner__btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.6rem 1.25rem; border-radius: var(--r-full);
+      font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      transition: all var(--dur-fast) var(--ease);
+      white-space: nowrap; font-family: var(--font-body);
+    }
+    .welcome-banner__btn--primary { background: var(--clr-accent); color: #1A1A00; border: 2px solid var(--clr-accent); }
+    .welcome-banner__btn--primary:hover { background: #D49200; border-color: #D49200; transform: translateY(-2px); }
+    .welcome-banner__btn--outline { background: rgba(255,255,255,0.08); color: #fff; border: 2px solid rgba(255,255,255,0.2); backdrop-filter: blur(6px); }
+    .welcome-banner__btn--outline:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.75rem; }
+    .stat-card {
+      background: var(--clr-surface); border: 1.5px solid var(--clr-border);
+      border-radius: var(--r-lg); padding: 1.25rem; display: flex;
+      flex-direction: column; gap: 0.75rem;
+      transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .stat-card__header { display: flex; align-items: center; justify-content: space-between; }
+    .stat-card__icon { width: 42px; height: 42px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .stat-card__icon--green { background: var(--clr-primary-pale); color: var(--clr-primary); }
+    .stat-card__icon--gold  { background: var(--clr-accent-light); color: #B07800; }
+    .stat-card__icon--blue  { background: #E3F2FD; color: #1565C0; }
+    .stat-card__icon--red   { background: #FFF0F0; color: #C53030; }
+    .stat-card__trend { display: flex; align-items: center; gap: 0.25rem; font-size: 0.72rem; font-weight: 700; }
+    .stat-card__trend.up { color: #2D9B5E; }
+    .stat-card__trend.down { color: #C53030; }
+    .stat-card__value { font-family: var(--font-heading); font-size: 1.65rem; font-weight: 800; color: var(--clr-text-dark); line-height: 1; }
+    .stat-card__label { font-size: 0.8rem; color: var(--clr-text-muted); font-weight: 500; }
+    .stat-card__bar { height: 4px; background: var(--clr-bg); border-radius: var(--r-full); overflow: hidden; }
+    .stat-card__bar-fill { height: 100%; border-radius: var(--r-full); background: var(--clr-primary); transition: width 0.8s var(--ease); }
+
+    .dash-row { display: grid; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .dash-row--2col  { grid-template-columns: 1fr 1fr; }
+    .dash-row--3col  { grid-template-columns: 2fr 1fr; }
+    .dash-row--chart { grid-template-columns: 2fr 1fr; }
+
+    .dash-card { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: var(--r-lg); overflow: hidden; }
+    .dash-card__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.25rem 0.9rem; border-bottom: 1px solid var(--clr-border);
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .dash-card__title { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: var(--clr-text-dark); }
+    .dash-card__action {
+      font-size: 0.78rem; font-weight: 600; color: var(--clr-primary);
+      cursor: pointer; padding: 0.3rem 0.75rem; border-radius: var(--r-full);
+      border: 1.5px solid var(--clr-primary-pale); background: var(--clr-primary-pale);
+      transition: all var(--dur-fast) var(--ease); white-space: nowrap;
+    }
+    .dash-card__action:hover { background: var(--clr-primary); color: #fff; }
+    .dash-card__body { padding: 1.25rem; }
+
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--clr-primary-pale);
+    }
+    .section-header__title { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700; color: var(--clr-text-dark); }
+    .section-header__sub { font-size: 0.82rem; color: var(--clr-text-muted); margin-top: 0.2rem; }
+    .section-header__btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.55rem 1.1rem; background: var(--clr-primary); color: #fff;
+      border-radius: var(--r-full); font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: all var(--dur-fast) var(--ease); border: none;
+    }
+    .section-header__btn:hover { background: var(--clr-primary-light); transform: translateY(-2px); box-shadow: var(--shadow-green); }
+
+    .chart-area {
+      height: 220px; border-radius: var(--r-md);
+      background: linear-gradient(180deg, var(--clr-bg) 0%, var(--clr-bg-alt) 100%);
+      display: flex; align-items: flex-end; gap: 6px; padding: 1rem 0.75rem 0.75rem; overflow: hidden;
+    }
+    .chart-bar { flex: 1; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, var(--clr-primary-light), var(--clr-primary)); min-width: 0; transition: opacity var(--dur-fast) var(--ease); cursor: pointer; }
+    .chart-bar:hover { opacity: 0.8; }
+    .chart-bar.accent { background: linear-gradient(180deg, var(--clr-accent), #D49200); }
+    .chart-legend { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .chart-legend__item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--clr-text-muted); }
+    .chart-legend__dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .donut-svg { filter: drop-shadow(0 4px 12px rgba(31,110,250,0.15)); }
+    .donut-legend { width: 100%; display: flex; flex-direction: column; gap: 0.5rem; }
+    .donut-legend__item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; }
+    .donut-legend__dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .donut-legend__label { flex: 1; color: var(--clr-text-body); }
+    .donut-legend__val { font-weight: 700; color: var(--clr-text-dark); }
+
+    .dash-table-wrap {
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--clr-primary) var(--clr-border);
+      padding-bottom: 8px;
+    }
+    .dash-table-wrap::-webkit-scrollbar { height: 6px; display: block; }
+    .dash-table-wrap::-webkit-scrollbar-track { background: var(--clr-border); border-radius: 10px; }
+    .dash-table-wrap::-webkit-scrollbar-thumb { background: var(--clr-primary); border-radius: 10px; }
+    .dash-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .dash-table th {
+      text-align: left; padding: 0.7rem 1rem; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em; color: var(--clr-text-muted);
+      background: var(--clr-bg); border-bottom: 1.5px solid var(--clr-border); white-space: nowrap;
+    }
+    .dash-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--clr-border); color: var(--clr-text-body); vertical-align: middle; white-space: nowrap; }
+    .dash-table tr:last-child td { border-bottom: none; }
+    .dash-table tr:hover td { background: var(--clr-bg); }
+    .dash-table__name { display: flex; align-items: center; gap: 0.6rem; }
+    .dash-table__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--clr-primary-pale); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: var(--clr-primary); flex-shrink: 0; }
+    .dash-table__name-text { font-weight: 600; color: var(--clr-text-dark); }
+    .dash-table__email { font-size: 0.72rem; color: var(--clr-text-muted); }
+
+    .badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.65rem; border-radius: var(--r-full); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+    .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .badge--green  { background: #EBF2FF; color: #1F6EFA; }
+    .badge--gold   { background: #FFF3CC; color: #B07800; }
+    .badge--red    { background: #FFF0F0; color: #C53030; }
+    .badge--blue   { background: #E3F2FD; color: #1565C0; }
+    .badge--gray   { background: #F0F4F8; color: #5A6A7A; }
+
+    .activity-list { display: flex; flex-direction: column; gap: 0; }
+    .activity-item { display: flex; gap: 0.85rem; padding: 0.85rem 0; border-bottom: 1px solid var(--clr-border); align-items: flex-start; }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-item__icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .activity-item__body { flex: 1; min-width: 0; }
+    .activity-item__text { font-size: 0.82rem; color: var(--clr-text-body); line-height: 1.5; }
+    .activity-item__text strong { color: var(--clr-text-dark); font-weight: 700; }
+    .activity-item__time { font-size: 0.72rem; color: var(--clr-text-light); margin-top: 0.2rem; }
+
+    .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .quick-action-btn { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--clr-bg); border: 1.5px solid var(--clr-border); border-radius: var(--r-md); cursor: pointer; transition: all var(--dur-fast) var(--ease); text-align: center; }
+    .quick-action-btn:hover { border-color: var(--clr-primary); background: var(--clr-primary-pale); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .quick-action-btn i { font-size: 1.2rem; color: var(--clr-primary); }
+    .quick-action-btn span {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--clr-text-body);
+      white-space: normal;
+      line-height: 1.2;
+    }
+
+    .task-list { display: flex; flex-direction: column; gap: 0; }
+    .task-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--clr-border); cursor: pointer; }
+    .task-item:last-child { border-bottom: none; }
+    .task-item:hover .task-item__title { color: var(--clr-primary); }
+    .task-checkbox { width: 18px; height: 18px; border-radius: 5px; border: 2px solid var(--clr-border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all var(--dur-fast) var(--ease); }
+    .task-checkbox.done { background: var(--clr-primary); border-color: var(--clr-primary); }
+    .task-checkbox.done::after { content: '✓'; font-size: 0.65rem; color: #fff; font-weight: 900; }
+    .task-item__title { flex: 1; font-size: 0.82rem; font-weight: 500; color: var(--clr-text-body); transition: color var(--dur-fast) var(--ease); }
+    .task-item.completed .task-item__title { text-decoration: line-through; color: var(--clr-text-light); }
+    .task-item__due { font-size: 0.72rem; color: var(--clr-text-light); white-space: nowrap; }
+    .task-item__due.urgent { color: #C53030; font-weight: 600; }
+
+    .progress-section { display: flex; flex-direction: column; gap: 1rem; }
+    .progress-item { display: flex; align-items: center; gap: 0.75rem; }
+    .progress-item__label { font-size: 0.8rem; font-weight: 500; color: var(--clr-text-body); width: 110px; flex-shrink: 0; }
+    .progress-track { flex: 1; height: 7px; background: var(--clr-bg); border-radius: var(--r-full); overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: var(--r-full); transition: width 1s var(--ease); }
+    .progress-item__pct { font-size: 0.78rem; font-weight: 700; color: var(--clr-text-dark); width: 38px; text-align: right; flex-shrink: 0; }
+
+    .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .content-card {
+      background: var(--clr-surface); border: 1.5px solid var(--clr-border);
+      border-radius: var(--r-lg); overflow: hidden;
+      transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+    }
+    .content-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .content-card__img { width: 100%; height: 160px; object-fit: cover; background: var(--clr-bg-alt); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--clr-text-light); }
+    .content-card__body { padding: 1rem; }
+    .content-card__title { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: var(--clr-text-dark); margin-bottom: 0.3rem; }
+    .content-card__meta { font-size: 0.75rem; color: var(--clr-text-muted); margin-bottom: 0.5rem; }
+    .content-card__text { font-size: 0.82rem; color: var(--clr-text-body); line-height: 1.5; margin-bottom: 0.75rem; }
+    .content-card__footer { display: flex; align-items: center; justify-content: space-between; }
+
+    .img-placeholder {
+      width: 100%; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; border-radius: 0;
+    }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .kpi-tile {
+      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+      border-radius: var(--r-lg); padding: 1.25rem; color: #fff;
+      transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
+    }
+    .kpi-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-green); }
+    .kpi-tile--gold  { background: linear-gradient(135deg, #B07800 0%, var(--clr-accent) 100%); }
+    .kpi-tile--blue  { background: linear-gradient(135deg, #1565C0 0%, var(--clr-secondary-blue) 100%); }
+    .kpi-tile--red   { background: linear-gradient(135deg, #C53030 0%, #EF5350 100%); }
+    .kpi-tile__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.5rem; }
+    .kpi-tile__value { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; line-height: 1; margin-bottom: 0.25rem; }
+    .kpi-tile__sub   { font-size: 0.75rem; opacity: 0.75; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group--full { grid-column: span 2; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--clr-text-dark); }
+    .form-control {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.6rem 0.9rem; border: 1.5px solid var(--clr-border); border-radius: var(--r-sm);
+      font-family: var(--font-body); font-size: 0.875rem; color: var(--clr-text-dark);
+      background: var(--clr-bg); transition: border-color var(--dur-fast) var(--ease); outline: none;
+    }
+    .form-control:focus { border-color: var(--clr-primary); }
+    .form-control::placeholder { color: var(--clr-text-light); }
+
+    @keyframes count-up { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+    .animate-count { animation: count-up 0.5s var(--ease-bounce) both; }
+
+    .toast {
+      position: fixed; top: calc(var(--topbar-h) + 0.75rem); right: 1.25rem;
+      background: var(--clr-surface); border: 1.5px solid var(--clr-border);
+      border-left: 4px solid var(--clr-primary); border-radius: var(--r-md);
+      padding: 0.85rem 1.1rem; font-size: 0.85rem; color: var(--clr-text-dark);
+      z-index: 9999; max-width: 300px; transform: translateX(120%);
+      transition: transform var(--dur-base) var(--ease-bounce); box-shadow: var(--shadow-md);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: transform var(--dur-base) var(--ease-bounce), opacity var(--dur-base) var(--ease), visibility var(--dur-base) var(--ease); box-shadow: var(--shadow-md);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.show { transform: translateX(0); opacity: 1; visibility: visible; pointer-events: auto; }
+    .toast--error { border-left-color: #E53E3E; }
+
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; background: rgba(13,31,45,0.6);
+      z-index: 9000; align-items: center; justify-content: center; backdrop-filter: blur(4px);
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal {
+      background: var(--clr-surface); border-radius: var(--r-xl); padding: 2rem;
+      max-width: 380px; width: 90%; text-align: center;
+      animation: modal-in 0.3s var(--ease-bounce); box-shadow: var(--shadow-lg);
+    }
+    @keyframes modal-in { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal__icon { width: 60px; height: 60px; background: #FFF0F0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 1.4rem; color: #C53030; }
+    .modal__title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: var(--clr-text-dark); margin-bottom: 0.5rem; }
+    .modal__text { font-size: 0.88rem; color: var(--clr-text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+    .modal__actions { display: flex; gap: 0.75rem; justify-content: center; }
+    .modal__btn { padding: 0.65rem 1.5rem; border-radius: var(--r-full); font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all var(--dur-fast) var(--ease); font-family: var(--font-body); border: 2px solid transparent; }
+    .modal__btn--cancel { background: var(--clr-bg); color: var(--clr-text-body); border-color: var(--clr-border); }
+    .modal__btn--cancel:hover { background: var(--clr-bg-alt); }
+    .modal__btn--logout { background: #E53E3E; color: #fff; border-color: #E53E3E; }
+    .modal__btn--logout:hover { background: #C53030; transform: translateY(-2px); }
+
+    .modal-404 .modal__icon { background: #FFF8E1; color: var(--clr-accent); }
+
+    @keyframes slide-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-up { animation: slide-up 0.4s var(--ease) both; }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .animate-fade { animation: fade-in 0.4s var(--ease) both; }
+
+    @keyframes pulse-ring { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
+    .pulse-dot { position: relative; display: inline-block; width: 10px; height: 10px; }
+    .pulse-dot::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #2D9B5E; animation: pulse-ring 1.4s ease-out infinite; }
+    .pulse-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #2D9B5E; }
+
+    .alert-strip {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 1.1rem; border-radius: var(--r-md);
+      margin-bottom: 1rem; font-size: 0.84rem;
+    }
+    .alert-strip--warning { background: #FFF8E1; border-left: 4px solid var(--clr-accent); color: #B07800; }
+    .alert-strip--error   { background: #FFF0F0; border-left: 4px solid #E53E3E; color: #C53030; }
+    .alert-strip--success { background: #EBF2FF; border-left: 4px solid var(--clr-primary); color: var(--clr-primary); }
+    .alert-strip i { font-size: 1rem; flex-shrink: 0; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .team-card {
+      background: var(--clr-surface); border: 1.5px solid var(--clr-border);
+      border-radius: var(--r-lg); padding: 1.5rem; text-align: center;
+      transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+    }
+    .team-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .team-card__avatar {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+    }
+    .team-card__name { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: var(--clr-text-dark); margin-bottom: 0.2rem; }
+    .team-card__role { font-size: 0.78rem; color: var(--clr-text-muted); margin-bottom: 0.75rem; }
+    .team-card__actions { display: flex; gap: 0.5rem; justify-content: center; }
+    .team-card__action-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--clr-border);
+      background: var(--clr-bg); display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem; color: var(--clr-text-muted); cursor: pointer;
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .team-card__action-btn:hover { border-color: var(--clr-primary); color: var(--clr-primary); background: var(--clr-primary-pale); }
+
+    .notif-item {
+      display: flex; gap: 0.85rem; padding: 1rem; border-bottom: 1px solid var(--clr-border);
+      align-items: flex-start; transition: background var(--dur-fast) var(--ease);
+    }
+    .notif-item:hover { background: var(--clr-bg); }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-item.unread { border-left: 3px solid var(--clr-primary); }
+    .notif-item__icon { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .notif-item__body { flex: 1; min-width: 0; }
+    .notif-item__title { font-size: 0.85rem; font-weight: 600; color: var(--clr-text-dark); }
+    .notif-item__sub { font-size: 0.78rem; color: var(--clr-text-muted); margin-top: 0.1rem; }
+    .notif-item__time { font-size: 0.72rem; color: var(--clr-text-light); white-space: nowrap; }
+
+    .settings-grid { display: grid; grid-template-columns: 240px 1fr; gap: 1.5rem; }
+    .settings-nav { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: var(--r-lg); padding: 0.75rem; height: fit-content; }
+    .settings-nav-item {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem;
+      border-radius: var(--r-md); font-size: 0.875rem; color: var(--clr-text-body);
+      cursor: pointer; transition: all var(--dur-fast) var(--ease);
+    }
+    .settings-nav-item:hover { background: var(--clr-bg); color: var(--clr-primary); }
+    .settings-nav-item.active { background: var(--clr-primary-pale); color: var(--clr-primary); font-weight: 600; }
+    .settings-nav-item i { width: 18px; text-align: center; }
+    .settings-content { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: var(--r-lg); padding: 1.5rem; }
+    .settings-section-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--clr-text-dark); margin-bottom: 1.25rem; }
+
+    .table-action-btn {
+      padding: 0.28rem 0.65rem; border-radius: var(--r-sm); font-size: 0.72rem; font-weight: 600;
+      cursor: pointer; transition: all var(--dur-fast) var(--ease); border: 1.5px solid transparent;
+    }
+    .table-action-btn--view  { background: var(--clr-primary-pale); color: var(--clr-primary); border-color: var(--clr-primary-pale); }
+    .table-action-btn--view:hover { background: var(--clr-primary); color: #fff; }
+    .table-action-btn--del   { background: #FFF0F0; color: #C53030; border-color: #FFF0F0; }
+    .table-action-btn--del:hover { background: #C53030; color: #fff; }
+
+    @media (max-width: 1200px) {
+      .stats-grid   { grid-template-columns: repeat(2, 1fr); }
+      .kpi-grid     { grid-template-columns: repeat(2, 1fr); }
+      .dash-row--3col { grid-template-columns: 1fr 1fr; }
+      .dash-row--chart { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid    { grid-template-columns: 1fr 1fr; }
+      .settings-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+        top: var(--topbar-h);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .dash-main { margin-left: 0; }
+      .topbar__hamburger { display: flex; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --topbar-h: 60px; --sidebar-w: 260px; }
+      .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+      .kpi-grid    { grid-template-columns: repeat(2, 1fr); }
+      .dash-row--2col { grid-template-columns: 1fr; }
+      .dash-row--3col { grid-template-columns: 1fr; }
+      .welcome-banner { flex-direction: column; align-items: flex-start; }
+      .welcome-banner__actions { width: 100%; }
+      .welcome-banner__btn { flex: 1; justify-content: center; }
+      .dash-content { padding: 1.25rem 1rem 2rem; }
+      .content-grid { grid-template-columns: 1fr; }
+      .team-grid    { grid-template-columns: 1fr 1fr; }
+      .settings-grid { grid-template-columns: 1fr; }
+      .quick-actions { grid-template-columns: repeat(4, 1fr); }
+      .topbar__logo-zone { width: auto; flex: 1; display: flex; align-items: center; gap: 8px; min-width: 0; }
+      .topbar__meta { display: none; }
+      .topbar__divider { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group--full { grid-column: span 1; }
+      .dash-table-wrap { overflow-x: scroll !important; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid  { grid-template-columns: 1fr; gap: 0.75rem; }
+      .kpi-grid    { grid-template-columns: 1fr; gap: 0.75rem; }
+      .stat-card   { padding: 1rem; }
+      .stat-card__value { font-size: 1.35rem; }
+      .topbar      { padding: 0 0.875rem; gap: 0.6rem; }
+      .dash-content { padding: 1rem 0.875rem 2rem; }
+      .welcome-banner { padding: 1.25rem; }
+      .welcome-banner__actions { flex-direction: column; }
+      .welcome-banner__btn { width: 100%; }
+      .team-grid   { grid-template-columns: 1fr; }
+      .quick-actions { grid-template-columns: repeat(2, 1fr); }
+      .modal       { padding: 1.5rem; }
+      .topbar__actions { gap: 0.3rem; }
+      .topbar__logo img { height: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+
+
+<div class="modal-backdrop modal-404" id="modal404">
+  <div class="modal">
+    <div class="modal__icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+    <div class="modal__title">Page Not Found</div>
+    <p class="modal__text">This feature is currently unavailable or under construction. Error 404.</p>
+    <div class="modal__actions">
+      <button class="modal__btn modal__btn--cancel" onclick="close404Modal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="dash-layout">
+
+  <header class="topbar" id="topbar">
+    
+    <button class="topbar__hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Toggle menu" aria-expanded="false">
+      <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+    </button>
+
+    <div class="topbar__logo-zone">
+      <a href="index.html" class="topbar__logo" onclick="show404Modal()" aria-label="Stackly EV Charging">
+        <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div style="display:none;align-items:center;gap:0.5rem;">
+          <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;"><i class="fa-solid fa-chart-line"></i></div>
+          <span style="font-family:var(--font-heading);font-size:1.3rem;font-weight:700;color:#fff;">Stack<span style="color:var(--clr-accent);">ly</span></span>
+        </div>
+      </a>
+    </div>
+
+    <div class="topbar__divider"></div>
+    <div class="topbar__meta">
+      <div class="topbar__page-title" id="topbarTitle">Admin <span>Dashboard</span></div>
+      <div class="topbar__breadcrumb" id="topbarBreadcrumb">Home / Dashboard</div>
+    </div>
+
+    <div class="topbar__actions">
+      <button class="topbar__icon-btn" onclick="showSection('notifications')" title="Notifications" aria-label="Notifications" style="font-size:1.15rem;">
+        🔔
+        <span class="topbar__notif-dot" style="top:4px;right:4px;"></span>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    
+    <div class="sidebar__user">
+      <div class="sidebar__user-inner">
+        <div class="sidebar__avatar" id="sidebarAvatarText">A</div>
+        <div class="sidebar__user-info">
+          <div class="sidebar__user-label">Welcome back</div>
+          <div class="sidebar__user-name" id="sidebarUserName">Admin User</div>
+          <div class="sidebar__user-email" id="sidebarUserEmail">admin@stackly.com</div>
+          <span class="sidebar__user-role">🛡️ Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main navigation">
+      
+      <div class="sidebar__nav-section">
+        <div class="sidebar__nav-section-label">Main</div>
+        <a class="sidebar__nav-item active" onclick="showSection('overview', 'Dashboard', this)" role="button" tabindex="0">
+          🏠 Overview
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('analytics', 'Analytics', this)" role="button" tabindex="0">
+          📈 Analytics
+          <span class="sidebar__nav-badge">New</span>
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('transactions', 'Orders', this)" role="button" tabindex="0">
+          💸 Orders
+          <span class="sidebar__nav-badge red">12</span>
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('invoices', 'Charge Sessions', this)" role="button" tabindex="0">
+          ⚡ Charge Sessions
+        </a>
+      </div>
+
+      <div class="sidebar__nav-section">
+        <div class="sidebar__nav-section-label">Management</div>
+        <a class="sidebar__nav-item" onclick="showSection('users', 'Users', this)" role="button" tabindex="0">
+          👥 Users
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('clients', 'Customers', this)" role="button" tabindex="0">
+          🤝 Customers
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('reports', 'Station Report', this)" role="button" tabindex="0">
+          📋 Station Report
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('compliance', 'Infrastructure', this)" role="button" tabindex="0">
+          🛡️ Infrastructure
+          <span class="sidebar__nav-badge red">3</span>
+        </a>
+      </div>
+
+      <div class="sidebar__nav-section">
+        <div class="sidebar__nav-section-label">System</div>
+        <a class="sidebar__nav-item" onclick="showSection('settings', 'Settings', this)" role="button" tabindex="0">
+          ⚙️ Settings
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('notifications', 'Notifications', this)" role="button" tabindex="0">
+          🔔 Notifications
+          <span class="sidebar__nav-badge">5</span>
+        </a>
+        <a class="sidebar__nav-item" onclick="showSection('support', 'Help & Support', this)" role="button" tabindex="0">
+          💬 Help & Support
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar__bottom">
+      <button class="sidebar__logout" onclick="handleLogout()">
+        <span style="font-size:1.1rem;">🚪</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="dash-main">
+    <div class="dash-content-wrap">
+      <div class="dash-content">
+
+        <div class="section-panel active animate-up" id="section-overview">
+
+          <div class="welcome-banner">
+            <div class="welcome-banner__text">
+              <div class="welcome-banner__tag"><i class="fa-solid fa-user-shield"></i> Admin Portal</div>
+              <h1 class="welcome-banner__title">Welcome back, <span id="welcomeName">Admin</span>!</h1>
+              <p class="welcome-banner__sub" id="welcomeEmail">admin@stackly.com &nbsp;·&nbsp; Last login: Today, 9:42 AM</p>
+            </div>
+            <div class="welcome-banner__actions">
+              <button class="welcome-banner__btn welcome-banner__btn--outline" onclick="showToast('Generating report...')">
+                <i class="fa-solid fa-download"></i> Export
+              </button>
+              <button class="welcome-banner__btn welcome-banner__btn--primary" onclick="showSection('invoices')">
+                <i class="fa-solid fa-plus"></i> New Charge Session
+              </button>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card__header">
+                <div class="stat-card__icon stat-card__icon--green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                <div class="stat-card__trend up"><i class="fa-solid fa-arrow-trend-up"></i> +12.4%</div>
+              </div>
+              <div class="stat-card__value">₹24.8L</div>
+              <div class="stat-card__label">Total Revenue</div>
+              <div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:72%;background:var(--clr-primary);"></div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__header">
+                <div class="stat-card__icon stat-card__icon--gold"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-card__trend up"><i class="fa-solid fa-arrow-trend-up"></i> +8.1%</div>
+              </div>
+              <div class="stat-card__value">1,248</div>
+              <div class="stat-card__label">Active Customers</div>
+              <div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:85%;background:var(--clr-accent);"></div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__header">
+                <div class="stat-card__icon stat-card__icon--blue"><i class="fa-solid fa-file-invoice"></i></div>
+                <div class="stat-card__trend up"><i class="fa-solid fa-arrow-trend-up"></i> +3.2%</div>
+              </div>
+              <div class="stat-card__value">2,045</div>
+              <div class="stat-card__label">Daily Charging Sessions</div>
+              <div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:58%;background:#1565C0;"></div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card__header">
+                <div class="stat-card__icon stat-card__icon--red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="stat-card__trend down"><i class="fa-solid fa-arrow-trend-down"></i> -2.5%</div>
+              </div>
+              <div class="stat-card__value">4</div>
+              <div class="stat-card__label">Station Faults Pending</div>
+              <div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:30%;background:#C53030;"></div></div>
+            </div>
+          </div>
+
+          <div class="dash-row dash-row--chart">
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-chart-column" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Monthly Revenue</div>
+                <button class="dash-card__action" onclick="showSection('analytics')"><i class="fa-solid fa-expand"></i> View Full</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="chart-area">
+                  <div class="chart-bar" style="height:55%;" title="Jan: ₹1.8L"></div>
+                  <div class="chart-bar" style="height:65%;" title="Feb: ₹2.1L"></div>
+                  <div class="chart-bar" style="height:48%;" title="Mar: ₹1.6L"></div>
+                  <div class="chart-bar" style="height:80%;" title="Apr: ₹2.6L"></div>
+                  <div class="chart-bar accent" style="height:90%;" title="May: ₹2.9L"></div>
+                  <div class="chart-bar" style="height:72%;" title="Jun: ₹2.3L"></div>
+                  <div class="chart-bar" style="height:60%;" title="Jul: ₹1.9L"></div>
+                  <div class="chart-bar" style="height:85%;" title="Aug: ₹2.8L"></div>
+                  <div class="chart-bar accent" style="height:95%;" title="Sep: ₹3.1L"></div>
+                  <div class="chart-bar" style="height:78%;" title="Oct: ₹2.5L"></div>
+                  <div class="chart-bar" style="height:68%;" title="Nov: ₹2.2L"></div>
+                  <div class="chart-bar accent" style="height:100%;" title="Dec: ₹3.2L"></div>
+                </div>
+                <div class="chart-legend">
+                  <div class="chart-legend__item"><div class="chart-legend__dot" style="background:var(--clr-primary);"></div> Standard Months</div>
+                  <div class="chart-legend__item"><div class="chart-legend__dot" style="background:var(--clr-accent);"></div> Peak Months</div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-chart-pie" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Revenue Split</div>
+                <button class="dash-card__action" onclick="showSection('analytics')">Details</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="donut-wrap">
+                  <svg class="donut-svg" viewBox="0 0 120 120" width="140" height="140">
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#EEF2F8" stroke-width="18"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#1F6EFA" stroke-width="18" stroke-dasharray="180 122" stroke-dashoffset="75" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#FFB300" stroke-width="18" stroke-dasharray="75 227" stroke-dashoffset="-105" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#2196F3" stroke-width="18" stroke-dasharray="47 255" stroke-dashoffset="-180" stroke-linecap="round"/>
+                    <text x="60" y="56" text-anchor="middle" font-size="11" font-weight="800" fill="#212529" font-family="Georgia,serif">₹24.8L</text>
+                    <text x="60" y="70" text-anchor="middle" font-size="7" fill="#6C757D" font-family="sans-serif">Total</text>
+                  </svg>
+                  <div class="donut-legend">
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#1F6EFA;"></div><span class="donut-legend__label">Commercial Hubs</span><span class="donut-legend__val">59%</span></div>
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#FFB300;"></div><span class="donut-legend__label">Fleet Depots</span><span class="donut-legend__val">25%</span></div>
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#2196F3;"></div><span class="donut-legend__label">Home Installs</span><span class="donut-legend__val">16%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-row dash-row--3col">
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-handshake" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Recent Customers</div>
+                <button class="dash-card__action" onclick="showSection('clients')">View All</button>
+              </div>
+              <div class="dash-card__body" style="padding:0;">
+                <div class="dash-table-wrap">
+                  <table class="dash-table">
+                    <thead><tr><th>Client</th><th>Service</th><th>Amount</th><th>Status</th></tr></thead>
+                    <tbody>
+                      <tr><td><div class="dash-table__name"><div class="dash-table__avatar">RK</div><div><div class="dash-table__name-text">Rahul Krishnan</div><div class="dash-table__email">rahul@infosys.com</div></div></div></td><td>Commercial Hub – 20 pts</td><td>₹8,50,000</td><td><span class="badge badge--green">Completed</span></td></tr>
+                      <tr><td><div class="dash-table__name"><div class="dash-table__avatar">PM</div><div><div class="dash-table__name-text">Priya Menon</div><div class="dash-table__email">priya@phoenix.com</div></div></div></td><td>Public Charging Hub</td><td>₹1,99,999</td><td><span class="badge badge--gold">Pending</span></td></tr>
+                      <tr><td><div class="dash-table__name"><div class="dash-table__avatar">VS</div><div><div class="dash-table__name-text">Vijay Sharma</div><div class="dash-table__email">vijay@tatamotors.in</div></div></div></td><td>Fleet Depot – 40 pts</td><td>₹45,00,000</td><td><span class="badge badge--blue">In Review</span></td></tr>
+                      <tr><td><div class="dash-table__name"><div class="dash-table__avatar">LN</div><div><div class="dash-table__name-text">Lakshmi Nair</div><div class="dash-table__email">lnair@greencabs.in</div></div></div></td><td>Home Charging – 5 pts</td><td>₹1,99,995</td><td><span class="badge badge--red">Overdue</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-bolt" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Quick Actions</div>
+              </div>
+              <div class="dash-card__body">
+                <div class="quick-actions">
+                  <button class="quick-action-btn" onclick="showSection('invoices')"><i class="fa-solid fa-bolt"></i><span>New Charge Session</span></button>
+                  <button class="quick-action-btn" onclick="showSection('clients')"><i class="fa-solid fa-user-plus"></i><span>Add Client</span></button>
+                  <button class="quick-action-btn" onclick="showSection('reports')"><i class="fa-solid fa-chart-line"></i><span>Station Report</span></button>
+                  <button class="quick-action-btn" onclick="showSection('compliance')"><i class="fa-solid fa-shield-check"></i><span>Infrastructure</span></button>
+                  <button class="quick-action-btn" onclick="showSection('transactions')"><i class="fa-solid fa-arrow-right-arrow-left"></i><span>Orders</span></button>
+                  <button class="quick-action-btn" onclick="showSection('settings')"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-row dash-row--2col">
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-list-check" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Pending Tasks</div>
+                <button class="dash-card__action" onclick="showToast('All tasks loaded')">Manage All</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="task-list">
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Dispatch engineer to Vijay Sharma depot fault</span><span class="task-item__due urgent">Today</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Follow up with Lakshmi Nair (payment overdue)</span><span class="task-item__due urgent">Today</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Prepare fleet report — Vijay Sharma, Tata Motors</span><span class="task-item__due">Jun 12</span></div>
+                  <div class="task-item completed" onclick="toggleTask(this)"><div class="task-checkbox done"></div><span class="task-item__title">Onboard cloud platform — Priya Menon Hub</span><span class="task-item__due">Done</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Monthly station infrastructure audit — 50 cities</span><span class="task-item__due">Jun 15</span></div>
+                  <div class="task-item completed" onclick="toggleTask(this)"><div class="task-checkbox done"></div><span class="task-item__title">Commission new hub — Rahul Krishnan, Infosys</span><span class="task-item__due">Done</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-chart-simple" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Team Performance</div>
+                <button class="dash-card__action" onclick="showSection('reports')">Inventory</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="progress-section">
+                  <div class="progress-item"><span class="progress-item__label">Station Uptime</span><div class="progress-track"><div class="progress-fill" style="width:99%;background:var(--clr-primary);"></div></div><span class="progress-item__pct">99%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Fleet Sessions</span><div class="progress-track"><div class="progress-fill" style="width:72%;background:var(--clr-accent);"></div></div><span class="progress-item__pct">72%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Client Sat.</span><div class="progress-track"><div class="progress-fill" style="width:95%;background:#1565C0;"></div></div><span class="progress-item__pct">95%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Fault Resolve</span><div class="progress-track"><div class="progress-fill" style="width:88%;background:#EF5350;"></div></div><span class="progress-item__pct">88%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Revenue Collect.</span><div class="progress-track"><div class="progress-fill" style="width:99%;background:#2D9B5E;"></div></div><span class="progress-item__pct">99%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Compliance</span><div class="progress-track"><div class="progress-fill" style="width:78%;background:#7C3AED;"></div></div><span class="progress-item__pct">78%</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="section-panel animate-fade" id="section-analytics">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Analytics</div>
+              <div class="section-header__sub">EV Charging Network performance, trends and forecasts</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Exporting analytics report...')"><i class="fa-solid fa-download"></i> Export Report</button>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-tile">
+              <div class="kpi-tile__label"><i class="fa-solid fa-indian-rupee-sign"></i> Revenue YTD</div>
+              <div class="kpi-tile__value">₹1.48 Cr</div>
+              <div class="kpi-tile__sub">+14.2% vs last year</div>
+            </div>
+            <div class="kpi-tile kpi-tile--gold">
+              <div class="kpi-tile__label"><i class="fa-solid fa-percent"></i> Utilization Rate</div>
+              <div class="kpi-tile__value">38.4%</div>
+              <div class="kpi-tile__sub">+3.1% vs Q2</div>
+            </div>
+            <div class="kpi-tile kpi-tile--blue">
+              <div class="kpi-tile__label"><i class="fa-solid fa-file-invoice"></i> Charging Sessions</div>
+              <div class="kpi-tile__value">4,218</div>
+              <div class="kpi-tile__sub">342 this month</div>
+            </div>
+            <div class="kpi-tile kpi-tile--red">
+              <div class="kpi-tile__label"><i class="fa-solid fa-clock-rotate-left"></i> Outstanding</div>
+              <div class="kpi-tile__value">₹12.3L</div>
+              <div class="kpi-tile__sub">18 overdue sessions</div>
+            </div>
+          </div>
+
+          <div class="dash-row dash-row--2col">
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-chart-area" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Revenue Trend (12 Months)</div>
+                <button class="dash-card__action" onclick="showToast('Full chart loading...')">Expand</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="chart-area">
+                  <div class="chart-bar" style="height:42%;"></div>
+                  <div class="chart-bar" style="height:55%;"></div>
+                  <div class="chart-bar accent" style="height:70%;"></div>
+                  <div class="chart-bar" style="height:60%;"></div>
+                  <div class="chart-bar" style="height:75%;"></div>
+                  <div class="chart-bar accent" style="height:85%;"></div>
+                  <div class="chart-bar" style="height:65%;"></div>
+                  <div class="chart-bar" style="height:78%;"></div>
+                  <div class="chart-bar accent" style="height:92%;"></div>
+                  <div class="chart-bar" style="height:80%;"></div>
+                  <div class="chart-bar" style="height:70%;"></div>
+                  <div class="chart-bar accent" style="height:100%;"></div>
+                </div>
+                <div class="chart-legend">
+                  <div class="chart-legend__item"><div class="chart-legend__dot" style="background:var(--clr-primary);"></div> Regular Revenue</div>
+                  <div class="chart-legend__item"><div class="chart-legend__dot" style="background:var(--clr-accent);"></div> Peak Months</div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-chart-pie" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Service Breakdown</div>
+              </div>
+              <div class="dash-card__body">
+                <div class="donut-wrap">
+                  <svg viewBox="0 0 120 120" width="130" height="130">
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#EEF2F8" stroke-width="18"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#1F6EFA" stroke-width="18" stroke-dasharray="150 152" stroke-dashoffset="75" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#FFB300" stroke-width="18" stroke-dasharray="80 222" stroke-dashoffset="-75" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#2196F3" stroke-width="18" stroke-dasharray="52 250" stroke-dashoffset="-155" stroke-linecap="round"/>
+                    <circle cx="60" cy="60" r="48" fill="none" stroke="#9C27B0" stroke-width="18" stroke-dasharray="20 282" stroke-dashoffset="-207" stroke-linecap="round"/>
+                    <text x="60" y="58" text-anchor="middle" font-size="10" font-weight="800" fill="#212529" font-family="Georgia,serif">Services</text>
+                    <text x="60" y="70" text-anchor="middle" font-size="7" fill="#6C757D" font-family="sans-serif">FY 2025-26</text>
+                  </svg>
+                  <div class="donut-legend">
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#1F6EFA;"></div><span class="donut-legend__label">DC Fast Charging</span><span class="donut-legend__val">50%</span></div>
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#FFB300;"></div><span class="donut-legend__label">AC Charging</span><span class="donut-legend__val">26%</span></div>
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#2196F3;"></div><span class="donut-legend__label">Station Audits</span><span class="donut-legend__val">17%</span></div>
+                    <div class="donut-legend__item"><div class="donut-legend__dot" style="background:#9C27B0;"></div><span class="donut-legend__label">Fleet Management</span><span class="donut-legend__val">7%</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <div class="dash-card__title"><i class="fa-solid fa-table" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Monthly Summary — FY 2025-26</div>
+              <button class="dash-card__action" onclick="showToast('Exporting table data...')"><i class="fa-solid fa-file-excel"></i> Export</button>
+            </div>
+            <div class="dash-card__body" style="padding:0;">
+              <div class="dash-table-wrap">
+                <table class="dash-table">
+                  <thead><tr><th>Month</th><th>Revenue</th><th>Expenses</th><th>Net Profit</th><th>Margin</th><th>Sessions</th></tr></thead>
+                  <tbody>
+                    <tr><td>January 2026</td><td>₹1,85,000</td><td>₹98,000</td><td>₹87,000</td><td><span class="badge badge--green">47%</span></td><td>28</td></tr>
+                    <tr><td>February 2026</td><td>₹2,12,000</td><td>₹1,05,000</td><td>₹1,07,000</td><td><span class="badge badge--green">50%</span></td><td>34</td></tr>
+                    <tr><td>March 2026</td><td>₹3,20,000</td><td>₹1,40,000</td><td>₹1,80,000</td><td><span class="badge badge--green">56%</span></td><td>52</td></tr>
+                    <tr><td>April 2026</td><td>₹2,45,000</td><td>₹1,20,000</td><td>₹1,25,000</td><td><span class="badge badge--gold">51%</span></td><td>41</td></tr>
+                    <tr><td>May 2026</td><td>₹2,90,000</td><td>₹1,55,000</td><td>₹1,35,000</td><td><span class="badge badge--gold">46%</span></td><td>47</td></tr>
+                    <tr><td>June 2026 (YTD)</td><td>₹1,48,000</td><td>₹82,000</td><td>₹66,000</td><td><span class="badge badge--blue">44%</span></td><td>24</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-transactions">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Orders</div>
+              <div class="section-header__sub">12 pending transactions require attention</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Filtering transactions...')"><i class="fa-solid fa-filter"></i> Filter</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--green"><i class="fa-solid fa-arrow-down"></i></div><div class="stat-card__trend up"><i class="fa-solid fa-arrow-trend-up"></i> +9%</div></div><div class="stat-card__value">₹14.2L</div><div class="stat-card__label">Total Inflow (Jun)</div><div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:80%;background:var(--clr-primary);"></div></div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--red"><i class="fa-solid fa-arrow-up"></i></div><div class="stat-card__trend down"><i class="fa-solid fa-arrow-trend-down"></i> -3%</div></div><div class="stat-card__value">₹8.7L</div><div class="stat-card__label">Total Outflow (Jun)</div><div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:55%;background:#C53030;"></div></div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--blue"><i class="fa-solid fa-clock"></i></div><span class="badge badge--gold">Pending</span></div><div class="stat-card__value">12</div><div class="stat-card__label">Pending Orders</div><div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:40%;background:#FFB300;"></div></div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--gold"><i class="fa-solid fa-check-double"></i></div><span class="badge badge--green">Done</span></div><div class="stat-card__value">284</div><div class="stat-card__label">Settled This Month</div><div class="stat-card__bar"><div class="stat-card__bar-fill" style="width:90%;background:var(--clr-accent);"></div></div></div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <div class="dash-card__title"><i class="fa-solid fa-list" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Transaction Ledger</div>
+              <button class="dash-card__action" onclick="showToast('Downloading ledger...')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+            <div class="dash-card__body" style="padding:0;">
+              <div class="dash-table-wrap">
+                <table class="dash-table">
+                  <thead><tr><th>Txn ID</th><th>Client / Vendor</th><th>Type</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00481</td><td>Ramesh Kumar</td><td>Order Payment</td><td style="color:#2D9B5E;font-weight:700;">+₹8,500</td><td>Jun 08</td><td><span class="badge badge--green">Settled</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00480</td><td>Vijay Sharma</td><td>Station Audit Fee</td><td style="color:#2D9B5E;font-weight:700;">+₹45,000</td><td>Jun 07</td><td><span class="badge badge--blue">In Review</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00479</td><td>Station Supplies</td><td>Expense</td><td style="color:#C53030;font-weight:700;">-₹3,200</td><td>Jun 06</td><td><span class="badge badge--green">Settled</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00478</td><td>Lakshmi Nair</td><td>Fleet Management</td><td style="color:#C53030;font-weight:700;">-₹6,200</td><td>Jun 05</td><td><span class="badge badge--red">Overdue</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00477</td><td>SBI Bank Charges</td><td>Bank Fee</td><td style="color:#C53030;font-weight:700;">-₹850</td><td>Jun 04</td><td><span class="badge badge--green">Settled</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00476</td><td>Priya Anand Corp</td><td>Order Refund</td><td style="color:#2D9B5E;font-weight:700;">+₹12,000</td><td>Jun 03</td><td><span class="badge badge--gold">Pending</span></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">#TXN-00475</td><td>Suresh Co.</td><td>Engineering Fee</td><td style="color:#2D9B5E;font-weight:700;">+₹22,500</td><td>Jun 01</td><td><span class="badge badge--green">Settled</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-invoices">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Charging Sessions</div>
+              <div class="section-header__sub">Create, manage and track charging sessions</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Opening session creator...')"><i class="fa-solid fa-plus"></i> New Session</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--blue"><i class="fa-solid fa-file-invoice"></i></div></div><div class="stat-card__value">342</div><div class="stat-card__label">Total Sessions</div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--green"><i class="fa-solid fa-circle-check"></i></div></div><div class="stat-card__value">298</div><div class="stat-card__label">Paid</div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--gold"><i class="fa-solid fa-clock"></i></div></div><div class="stat-card__value">26</div><div class="stat-card__label">Pending</div></div>
+            <div class="stat-card"><div class="stat-card__header"><div class="stat-card__icon stat-card__icon--red"><i class="fa-solid fa-triangle-exclamation"></i></div></div><div class="stat-card__value">18</div><div class="stat-card__label">Overdue</div></div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <div class="dash-card__title"><i class="fa-solid fa-file-invoice-dollar" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Session Register</div>
+              <button class="dash-card__action" onclick="showToast('Downloading session list...')"><i class="fa-solid fa-download"></i> Download</button>
+            </div>
+            <div class="dash-card__body" style="padding:0;">
+              <div class="dash-table-wrap">
+                <table class="dash-table">
+                  <thead><tr><th>Session #</th><th>Client</th><th>Service</th><th>Amount</th><th>Due Date</th><th>Status</th><th>Action</th></tr></thead>
+                  <tbody>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">ORD-2026-342</td><td>Ramesh Kumar</td><td>Fleet Charging Plan</td><td>₹8,500</td><td>Jun 10</td><td><span class="badge badge--green">Paid</span></td><td><button class="table-action-btn table-action-btn--view" onclick="showToast('opening session ORD-2026-342...')">View</button></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">ORD-2026-341</td><td>Vijay Sharma</td><td>Quarterly Station Audit</td><td>₹45,000</td><td>Jun 20</td><td><span class="badge badge--gold">Pending</span></td><td><button class="table-action-btn table-action-btn--view" onclick="showToast('opening session ORD-2026-341...')">View</button></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">ORD-2026-340</td><td>Priya Anand Corp</td><td>OCPP Compliance Review</td><td>₹12,000</td><td>May 31</td><td><span class="badge badge--red">Overdue</span></td><td><button class="table-action-btn table-action-btn--view" onclick="showToast('opening session ORD-2026-340...')">View</button></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">ORD-2026-339</td><td>Suresh Co.</td><td>Equipment Processing</td><td>₹6,200</td><td>Jun 05</td><td><span class="badge badge--green">Paid</span></td><td><button class="table-action-btn table-action-btn--view" onclick="showToast('opening session ORD-2026-339...')">View</button></td></tr>
+                    <tr><td style="color:var(--clr-primary);font-weight:700;">ORD-2026-338</td><td>Lakshmi Nair</td><td>Session Report</td><td>₹9,800</td><td>May 25</td><td><span class="badge badge--red">Overdue</span></td><td><button class="table-action-btn table-action-btn--view" onclick="showToast('opening session ORD-2026-338...')">View</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-users">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Users</div>
+              <div class="section-header__sub">Manage system access and roles</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Opening user creation form...')"><i class="fa-solid fa-user-plus"></i> Add User</button>
+          </div>
+
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#1F6EFA,#4D8FFF);">AK</div>
+              <div class="team-card__name">Arjun Kumar</div>
+              <div class="team-card__role">Senior Engineer</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--green">Admin</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Arjun Kumar...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Arjun...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Arjun\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#B07800,#FFB300);">PM</div>
+              <div class="team-card__name">Preethi Menon</div>
+              <div class="team-card__role">OCPP Compliance Specialist</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--blue">Manager</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Preethi Menon...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Preethi...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Preethi\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#1565C0,#2196F3);">SR</div>
+              <div class="team-card__name">Sathish Rajan</div>
+              <div class="team-card__role">Session Analyst</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--gold">Analyst</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Sathish Rajan...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Sathish...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Sathish\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#7C3AED,#9C27B0);">NK</div>
+              <div class="team-card__name">Nandini Krishnan</div>
+              <div class="team-card__role">Fleet Management & Operations</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--gold">Analyst</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Nandini Krishnan...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Nandini...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Nandini\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#C53030,#EF5350);">KP</div>
+              <div class="team-card__name">Karthik Prabhu</div>
+              <div class="team-card__role">Quality Assurance Associate</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--gray">Associate</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Karthik Prabhu...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Karthik...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Karthik\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-card__avatar" style="background:linear-gradient(135deg,#0D47A1,#1976D2);">DV</div>
+              <div class="team-card__name">Divya Venkat</div>
+              <div class="team-card__role">Client Relations Executive</div>
+              <div style="margin-bottom:0.75rem;"><span class="badge badge--gray">Associate</span></div>
+              <div class="team-card__actions">
+                <button class="team-card__action-btn" onclick="showToast('Editing Divya Venkat...')"><i class="fa-solid fa-pen"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Sending email to Divya...')"><i class="fa-solid fa-envelope"></i></button>
+                <button class="team-card__action-btn" onclick="showToast('Viewing Divya\'s profile...')"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-clients">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Customers</div>
+              <div class="section-header__sub">1,248 active clients across all charging verticals</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Opening client onboarding form...')"><i class="fa-solid fa-user-plus"></i> Add Customer</button>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-card">
+              <img src="assets/public_charging.webp" class="content-card__img" alt="Apollo EV Charging Hub" />
+              <div class="content-card__body">
+                <div class="content-card__title">Apollo EV Charging Hub</div>
+                <div class="content-card__meta"><span class="badge badge--blue">Corporate</span> &nbsp; Since 2019</div>
+                <div class="content-card__text">Leading EV charging hub. Services: station management, fleet charging plans, and infrastructure maintenance.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:var(--clr-primary);">₹45,000/yr</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Apollo profile...')">View</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/public_charging.webp" class="content-card__img" alt="Priya Anand Charging Hubs" />
+              <div class="content-card__body">
+                <div class="content-card__title">Priya Anand Charging Hubs</div>
+                <div class="content-card__meta"><span class="badge badge--gold">Hub</span> &nbsp; Since 2021</div>
+                <div class="content-card__text">Charging network with 6 stations in Chennai. Services: OCPP compliance, monthly session reports and station audits.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:var(--clr-primary);">₹12,000/yr</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Priya Anand profile...')">View</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/home_charging.webp" class="content-card__img" alt="Ramesh Kumar" />
+              <div class="content-card__body">
+                <div class="content-card__title">Ramesh Kumar (Individual)</div>
+                <div class="content-card__meta"><span class="badge badge--green">Client</span> &nbsp; Since 2022</div>
+                <div class="content-card__text">EV fleet owner. Services: Home charging setup, charging history tracking and energy advisory.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:var(--clr-primary);">₹8,500/yr</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Ramesh Kumar profile...')">View</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/ev_smart_tech.webp" class="content-card__img" alt="Lakshmi Nair Charging Depot" />
+              <div class="content-card__body">
+                <div class="content-card__title">Lakshmi Nair Charging Depot</div>
+                <div class="content-card__meta"><span class="badge badge--red">Overdue</span> &nbsp; Since 2020</div>
+                <div class="content-card__text">Charging depot in Coimbatore. Services: equipment processing, charger supply, load balancing and OCPP compliance.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:#C53030;">₹6,200 due</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Lakshmi Nair profile...')">View</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/public_charging.webp" class="content-card__img" alt="MedCare EV Solutions" />
+              <div class="content-card__body">
+                <div class="content-card__title">MedCare EV Solutions</div>
+                <div class="content-card__meta"><span class="badge badge--blue">EV Network</span> &nbsp; Since 2023</div>
+                <div class="content-card__text">Private charging network. Services: energy management filings, fleet charging plans and annual station audits.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:var(--clr-primary);">₹18,000/yr</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening MedCare profile...')">View</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/ev_smart_tech.webp" class="content-card__img" alt="Suresh EV Equipment" />
+              <div class="content-card__body">
+                <div class="content-card__title">Suresh EV Equipment</div>
+                <div class="content-card__meta"><span class="badge badge--green">Supplier</span> &nbsp; Since 2022</div>
+                <div class="content-card__text">Wholesale charger distributor. Services: bulk equipment supply, OCPP compliance and annual station audits.</div>
+                <div class="content-card__footer"><span style="font-weight:700;color:var(--clr-primary);">₹22,500/yr</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Suresh EV Equipment profile...')">View</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-reports">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Station Reports</div>
+              <div class="section-header__sub">Generate and download station reports</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Scheduling automated report...')"><i class="fa-solid fa-clock"></i> Schedule</button>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-card">
+              <img src="assets/app_interface.webp" class="content-card__img" alt="Station Inventory Report" />
+              <div class="content-card__body">
+                <div class="content-card__title">Station Inventory Report</div>
+                <div class="content-card__meta">Equipment Stock · FY 2025-26</div>
+                <div class="content-card__text">Comprehensive equipment and charger inventory summary across all station locations for the current business year.</div>
+                <div class="content-card__footer"><span class="badge badge--green">Ready</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Downloading Station Inventory Report...')"><i class="fa-solid fa-download"></i> Download</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/app_interface.webp" class="content-card__img" alt="Revenue Report" />
+              <div class="content-card__body">
+                <div class="content-card__title">Revenue Report</div>
+                <div class="content-card__meta">Station Revenue · Mar 31, 2026</div>
+                <div class="content-card__text">Year-end revenue analysis with standard charging, DC fast charging, and energy plan breakdown.</div>
+                <div class="content-card__footer"><span class="badge badge--green">Ready</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Downloading Revenue Report...')"><i class="fa-solid fa-download"></i> Download</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/app_interface.webp" class="content-card__img" alt="Station Analysis" />
+              <div class="content-card__body">
+                <div class="content-card__title">Station Analysis</div>
+                <div class="content-card__meta">Station Check · May 2026</div>
+                <div class="content-card__text">Monthly station summary for all charging hubs including standard, DC fast charging and energy plan breakdowns with status.</div>
+                <div class="content-card__footer"><span class="badge badge--gold">Processing</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Station Analysis...')">Preview</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/customer_support.webp" class="content-card__img" alt="Customer Insights" />
+              <div class="content-card__body">
+                <div class="content-card__title">Customer Insights</div>
+                <div class="content-card__meta">Top 50 Clients · Q1 FY 26</div>
+                <div class="content-card__text">Revenue contribution by client, outstanding sessions, station-wise energy delivery analysis and collection efficiency.</div>
+                <div class="content-card__footer"><span class="badge badge--green">Ready</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Downloading Customer Insights...')"><i class="fa-solid fa-download"></i> Download</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/customer_support.webp" class="content-card__img" alt="Maintenance Tracking" />
+              <div class="content-card__body">
+                <div class="content-card__title">Maintenance Tracking</div>
+                <div class="content-card__meta">Station Check · FY 2025-26</div>
+                <div class="content-card__text">Equipment supply compilation across all clients with session matching, discrepancies and OCPP compliance status.</div>
+                <div class="content-card__footer"><span class="badge badge--red">Pending</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Opening Maintenance Tracking...')">Preview</button></div>
+              </div>
+            </div>
+            <div class="content-card">
+              <img src="assets/app_interface.webp" class="content-card__img" alt="Revenue Statement" />
+              <div class="content-card__body">
+                <div class="content-card__title">Revenue Statement</div>
+                <div class="content-card__meta">Operations · Q1 FY 2025-26</div>
+                <div class="content-card__text">Quarterly station revenue from operations, supply chain and logistics activities with distribution ratio analysis.</div>
+                <div class="content-card__footer"><span class="badge badge--green">Ready</span><button class="table-action-btn table-action-btn--view" onclick="showToast('Downloading Revenue Statement...')"><i class="fa-solid fa-download"></i> Download</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-compliance">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Infrastructure Compliance</div>
+              <div class="section-header__sub">3 critical infrastructure issues need immediate action</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Loading compliance calendar...')"><i class="fa-solid fa-calendar-check"></i> Calendar</button>
+          </div>
+
+          <div class="alert-strip alert-strip--error"><i class="fa-solid fa-circle-xmark"></i> <strong>3 stations</strong> have missed maintenance deadlines — penalties may apply. Immediate action required.</div>
+          <div class="alert-strip alert-strip--warning"><i class="fa-solid fa-triangle-exclamation"></i> Station audit due in <strong>5 days</strong> for 24 registered stations. Prepare reports now.</div>
+          <div class="alert-strip alert-strip--success"><i class="fa-solid fa-circle-check"></i> Station certifications for 89 locations successfully processed this quarter.</div>
+
+          <div class="dash-row dash-row--2col">
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-shield-halved" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Infrastructure Compliance Checklist</div>
+                <button class="dash-card__action" onclick="showToast('Exporting compliance report...')">Export</button>
+              </div>
+              <div class="dash-card__body">
+                <div class="task-list">
+                  <div class="task-item completed" onclick="toggleTask(this)"><div class="task-checkbox done"></div><span class="task-item__title">Equipment Stocktake — April 2026</span><span class="task-item__due">Done</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Station Audit — May 2026</span><span class="task-item__due urgent">Jun 20</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Maintenance Check — Q1 FY26</span><span class="task-item__due urgent">Overdue</span></div>
+                  <div class="task-item completed" onclick="toggleTask(this)"><div class="task-checkbox done"></div><span class="task-item__title">Quality & Standard Check — May</span><span class="task-item__due">Done</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">License Renewal — FY26</span><span class="task-item__due">Jun 30</span></div>
+                  <div class="task-item" onclick="toggleTask(this)"><div class="task-checkbox"></div><span class="task-item__title">Equipment Order — Q1 FY26</span><span class="task-item__due">Jun 15</span></div>
+                  <div class="task-item completed" onclick="toggleTask(this)"><div class="task-checkbox done"></div><span class="task-item__title">OCPP Annual Filing — FY25</span><span class="task-item__due">Done</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card__header">
+                <div class="dash-card__title"><i class="fa-solid fa-gauge" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Infrastructure Health</div>
+              </div>
+              <div class="dash-card__body">
+                <div class="progress-section">
+                  <div class="progress-item"><span class="progress-item__label">OCPP Compliance Review</span><div class="progress-track"><div class="progress-fill" style="width:88%;background:var(--clr-primary);"></div></div><span class="progress-item__pct">88%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Fleet Charging</span><div class="progress-track"><div class="progress-fill" style="width:62%;background:#EF5350;"></div></div><span class="progress-item__pct">62%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">OCPP Filings</span><div class="progress-track"><div class="progress-fill" style="width:95%;background:#2D9B5E;"></div></div><span class="progress-item__pct">95%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">PF / ESI</span><div class="progress-track"><div class="progress-fill" style="width:100%;background:#1565C0;"></div></div><span class="progress-item__pct">100%</span></div>
+                  <div class="progress-item"><span class="progress-item__label">Station Tests</span><div class="progress-track"><div class="progress-fill" style="width:78%;background:var(--clr-accent);"></div></div><span class="progress-item__pct">78%</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-settings">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Settings</div>
+              <div class="section-header__sub">Manage firm profile, preferences and system configuration</div>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <div class="settings-nav">
+              <div class="settings-nav-item active" onclick="showToast('Loading Firm Profile...')"><i class="fa-solid fa-building"></i> Firm Profile</div>
+              <div class="settings-nav-item" onclick="showToast('Loading Billing Preferences...')"><i class="fa-solid fa-credit-card"></i> Billing</div>
+              <div class="settings-nav-item" onclick="showToast('Loading Notification Settings...')"><i class="fa-solid fa-bell"></i> Notifications</div>
+              <div class="settings-nav-item" onclick="showToast('Loading Security Settings...')"><i class="fa-solid fa-lock"></i> Security</div>
+              <div class="settings-nav-item" onclick="showToast('Loading Integrations...')"><i class="fa-solid fa-plug"></i> Integrations</div>
+              <div class="settings-nav-item" onclick="showToast('Loading Backup Settings...')"><i class="fa-solid fa-cloud-arrow-up"></i> Backup</div>
+            </div>
+            <div class="settings-content">
+              <div class="settings-section-title">Firm Profile</div>
+              <div class="form-grid">
+                <div class="form-group"><label>Firm Name</label><input class="form-control" type="text" value="Stackly EV Charging Solutions LLP" /></div>
+                <div class="form-group"><label>Admin Email</label><input class="form-control" type="email" value="admin@stackly.com" /></div>
+                <div class="form-group"><label>Contact Phone</label><input class="form-control" type="tel" value="+91 422 2345 678" /></div>
+                <div class="form-group"><label>Station License Number</label><input class="form-control" type="text" value="33AABFS9603R1ZX" /></div>
+                <div class="form-group"><label>Currency</label><select class="form-control"><option selected>₹ INR</option><option>$ USD</option><option>€ EUR</option></select></div>
+                <div class="form-group"><label>Service Rate (%)</label><input class="form-control" type="number" value="18" /></div>
+                <div class="form-group form-group--full"><label>Office Address</label><textarea class="form-control" style="resize:vertical;min-height:60px;">12/3 Race Course Road, Coimbatore, Tamil Nadu – 641 018</textarea></div>
+              </div>
+              <div style="margin-top:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button class="section-header__btn" onclick="showToast('Settings saved successfully!')"><i class="fa-solid fa-check"></i> Save Changes</button>
+                <button style="padding:0.55rem 1.1rem;border-radius:var(--r-full);border:1.5px solid var(--clr-border);background:var(--clr-bg);color:var(--clr-text-body);font-size:0.82rem;font-weight:600;cursor:pointer;" onclick="showToast('Changes discarded.')">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-notifications">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Notifications</div>
+              <div class="section-header__sub">5 unread alerts</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('All notifications marked as read.')"><i class="fa-solid fa-check-double"></i> Mark All Read</button>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__body" style="padding:0;">
+              <div class="notif-item unread">
+                <div class="notif-item__icon" style="background:#FFF0F0;color:#C53030;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">Maintenance Deadline Overdue — 3 Stations</div>
+                  <div class="notif-item__sub">Lakshmi Nair, Suresh & Co, KR Textiles have missed Q1 maintenance deadline.</div>
+                </div>
+                <div class="notif-item__time">2 hrs ago</div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-item__icon" style="background:#FFF8E1;color:#B07800;"><i class="fa-solid fa-file-invoice"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">Session ORD-2026-340 Overdue</div>
+                  <div class="notif-item__sub">Priya Anand Corp — ₹12,000 outstanding for 10 days. Send reminder?</div>
+                </div>
+                <div class="notif-item__time">5 hrs ago</div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-item__icon" style="background:var(--clr-primary-pale);color:var(--clr-primary);"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">Session Renewed Successfully — Ramesh Kumar</div>
+                  <div class="notif-item__sub">Assessment Year 2026-27. Acknowledgement No. 4582194810. View details.</div>
+                </div>
+                <div class="notif-item__time">Yesterday</div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-item__icon" style="background:#E3F2FD;color:#1565C0;"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">New Client Onboarded</div>
+                  <div class="notif-item__sub">MedCare EV Solutions registered on portal. Registration documents pending verification.</div>
+                </div>
+                <div class="notif-item__time">Jun 07</div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-item__icon" style="background:#F3E5F5;color:#7B1FA2;"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">Station Audit Due in 11 Days</div>
+                  <div class="notif-item__sub">Audit deadline: June 20, 2026. 24 stations affected. Start preparation now.</div>
+                </div>
+                <div class="notif-item__time">Jun 06</div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-item__icon" style="background:var(--clr-bg);color:var(--clr-text-muted);"><i class="fa-solid fa-file-export"></i></div>
+                <div class="notif-item__body">
+                  <div class="notif-item__title">Monthly Report Generated</div>
+                  <div class="notif-item__sub">May 2026 station report ready for download. Total revenue: ₹2,90,000.</div>
+                </div>
+                <div class="notif-item__time">Jun 01</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-panel animate-fade" id="section-support">
+          <div class="section-header">
+            <div>
+              <div class="section-header__title">Help & Support</div>
+              <div class="section-header__sub">Resources, FAQs and contact support</div>
+            </div>
+            <button class="section-header__btn" onclick="showToast('Opening support ticket form...')"><i class="fa-solid fa-ticket"></i> New Ticket</button>
+          </div>
+
+          <div class="content-grid">
+            <div class="content-card" style="cursor:pointer;" onclick="showToast('Opening Standard Charging Guide...')">
+              <img src="assets/ev_smart_tech.webp" class="content-card__img" alt="Standard Charging Guide" />
+              <div class="content-card__body">
+                <div class="content-card__title">Standard Charging Guide</div>
+                <div class="content-card__meta">Documentation · Updated Jun 2026</div>
+                <div class="content-card__text">Step-by-step guide for standard charging setup, station auditing, load balancing and annual report submission.</div>
+                <div class="content-card__footer"><span class="badge badge--green">Docs</span><span style="font-size:0.78rem;color:var(--clr-primary);font-weight:600;">Read Guide →</span></div>
+              </div>
+            </div>
+            <div class="content-card" style="cursor:pointer;" onclick="showToast('Opening Fleet Charging Plan Guide...')">
+              <img src="assets/app_interface.webp" class="content-card__img" alt="Session Guide" />
+              <div class="content-card__body">
+                <div class="content-card__title">Session Guide</div>
+                <div class="content-card__meta">Documentation · AY 2026-27</div>
+                <div class="content-card__text">Comprehensive charging session manual covering Level-1 through Level-7 with selection guide.</div>
+                <div class="content-card__footer"><span class="badge badge--gold">Docs</span><span style="font-size:0.78rem;color:var(--clr-primary);font-weight:600;">Read Guide →</span></div>
+              </div>
+            </div>
+            <div class="content-card" style="cursor:pointer;" onclick="showToast('Opening Charging Operations Guide...')">
+              <img src="assets/public_charging.webp" class="content-card__img" alt="Charging Operations" />
+              <div class="content-card__body">
+                <div class="content-card__title">Charging Operations</div>
+                <div class="content-card__meta">Documentation · FY 2025-26</div>
+                <div class="content-card__text">Guide for energy computation, load management, scheduling, safety checks and OCPP compliance.</div>
+                <div class="content-card__footer"><span class="badge badge--blue">Docs</span><span style="font-size:0.78rem;color:var(--clr-primary);font-weight:600;">Read Guide →</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card__header">
+              <div class="dash-card__title"><i class="fa-solid fa-headset" style="color:var(--clr-primary);margin-right:0.4rem;"></i> Contact Support Team</div>
+            </div>
+            <div class="dash-card__body">
+              <div class="form-grid">
+                <div class="form-group"><label>Subject</label><input class="form-control" type="text" placeholder="e.g. Station portal login issue" /></div>
+                <div class="form-group"><label>Priority</label><select class="form-control"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></div>
+                <div class="form-group form-group--full"><label>Describe your issue</label><textarea class="form-control" style="resize:vertical;min-height:80px;" placeholder="Describe the problem in detail..."></textarea></div>
+              </div>
+              <div style="margin-top:1rem;">
+                <button class="section-header__btn" onclick="showToast('Support ticket submitted! Ticket #TKT-0284 created.')"><i class="fa-solid fa-paper-plane"></i> Submit Ticket</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  
+  (function() {
+    const user = JSON.parse(localStorage.getItem('stackly_user') || 'null');
+    if (!user || !user.loggedIn) {
+      
+      const demoUser = { loggedIn: true, name: 'Admin User', email: 'admin@stackly.com', role: 'admin' };
+      localStorage.setItem('stackly_user', JSON.stringify(demoUser));
+      populateUser(demoUser);
+      return;
+    }
+    populateUser(user);
+  })();
+
+  function populateUser(user) {
+    const name = user.name || 'Admin';
+    const email = user.email || 'admin@stackly.com';
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const firstName = name.split(' ')[0];
+
+    const el = id => document.getElementById(id);
+    if (el('sidebarUserName')) el('sidebarUserName').textContent = name;
+    if (el('sidebarUserEmail')) el('sidebarUserEmail').textContent = email;
+    if (el('sidebarAvatarText')) el('sidebarAvatarText').textContent = initials;
+    if (el('welcomeName')) el('welcomeName').textContent = name;
+    if (el('welcomeEmail')) el('welcomeEmail').textContent = email + ' · Last login: Today, 9:42 AM';
+    document.title = 'Admin Dashboard — ' + name;
+  }
+
+  
+  let sidebarOpen = false;
+
+  function toggleSidebar() {
+    sidebarOpen ? closeSidebar() : openSidebar();
+  }
+
+  function openSidebar() {
+    sidebarOpen = true;
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('active');
+    const icon = document.getElementById('hamburgerIcon');
+    if (icon) icon.className = 'fa-solid fa-xmark';
+    const btn = document.getElementById('hamburgerBtn');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebarOpen = false;
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+    const icon = document.getElementById('hamburgerIcon');
+    if (icon) icon.className = 'fa-solid fa-bars';
+    const btn = document.getElementById('hamburgerBtn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  
+  function showSection(sectionId, titleText, navEl) {
+    
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+
+    
+    const target = document.getElementById('section-' + sectionId);
+    if (target) {
+      target.classList.add('active');
+      
+      target.style.animation = 'none';
+      target.offsetHeight; 
+      target.style.animation = '';
+    }
+
+    
+    document.querySelectorAll('.sidebar__nav-item').forEach(i => i.classList.remove('active'));
+    if (navEl) navEl.classList.add('active');
+
+    
+    const titleMap = {
+      overview: 'Dashboard', analytics: 'Analytics', transactions: 'Orders',
+      invoices: 'Charging Sessions', users: 'Users', clients: 'Customers',
+      reports: 'Station Reports', compliance: 'Infrastructure',
+      settings: 'Settings', notifications: 'Notifications', support: 'Help & Support'
+    };
+    const label = titleText || titleMap[sectionId] || sectionId;
+    const titleEl = document.getElementById('topbarTitle');
+    const bcEl = document.getElementById('topbarBreadcrumb');
+    if (titleEl) {
+      titleEl.innerHTML = 'Admin <span>' + label + '</span>';
+    }
+    if (bcEl) {
+      bcEl.textContent = 'Home / ' + label;
+    }
+
+    
+    if (window.innerWidth <= 1024) closeSidebar();
+
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  
+  function redirect404() {
+    window.location.href = '404.html';
+  }
+
+  let toastTimer;
+  function showToast(msg, type = 'success') {
+    if (msg.startsWith('Task marked complete') || msg === 'Task reopened') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show' + (type === 'error' ? ' toast--error' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+      return;
+    }
+    redirect404();
+  }
+
+  
+  function handleLogout() {
+    localStorage.removeItem('stackly_user');
+    sessionStorage.removeItem('stackly_user');
+    window.location.href = 'signin.html';
+  }
+
+  
+  function show404Modal() {
+    redirect404();
+  }
+  function close404Modal() {
+    
+  }
+  document.getElementById('modal404').addEventListener('click', function(e) {
+    if (e.target === this) redirect404();
+  });
+
+  
+  function toggleTask(item) {
+    item.classList.toggle('completed');
+    const cb = item.querySelector('.task-checkbox');
+    cb.classList.toggle('done');
+    showToast(item.classList.contains('completed') ? 'Task marked complete ✓' : 'Task reopened');
+  }
+
+  
+  history.pushState(null, '', location.href);
+  window.addEventListener('popstate', function() {
+    const user = JSON.parse(localStorage.getItem('stackly_user') || 'null');
+    if (!user || !user.loggedIn) {
+      window.location.replace('signin.html');
+    } else {
+      history.pushState(null, '', location.href);
+    }
+  });
+
+  
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 1024) closeSidebar();
+  });
+
+  
+  document.querySelectorAll('.sidebar__nav-item').forEach(item => {
+    item.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
+    });
+  });
+</script>
+</body>
+</html>
