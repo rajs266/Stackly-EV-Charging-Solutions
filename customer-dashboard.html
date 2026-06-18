@@ -59,35 +59,37 @@
 
     .sidebar {
       width:var(--sidebar-w);
-      background:linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+      background:linear-gradient(180deg, #E8F4FD 0%, #DAEEF9 60%, #CCE8F7 100%);
       position:fixed; left:0; top:var(--dash-header-h); bottom:0; z-index:1000;
       display:flex; flex-direction:column;
       transition:var(--transition);
       overflow-y:auto; overflow-x:hidden;
       overscroll-behavior:contain;
+      border-right:1px solid rgba(31,110,250,0.15);
     }
     .sidebar::-webkit-scrollbar { width:3px; }
-    .sidebar::-webkit-scrollbar-thumb { background:var(--primary-light); border-radius:2px; }
+    .sidebar::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#4D8FFF,#1F6EFA); border-radius:2px; }
 
     .sidebar-welcome {
       padding:18px 20px 16px;
-      border-bottom:1px solid rgba(255,255,255,0.07);
-      background:linear-gradient(180deg, rgba(31,110,250,0.18) 0%, transparent 100%);
+      border-bottom:1px solid rgba(31,110,250,0.12);
+      background:linear-gradient(180deg, rgba(31,110,250,0.1) 0%, rgba(31,110,250,0.04) 100%);
     }
     .sidebar-welcome-label {
       font-size:0.68rem; letter-spacing:1.5px; text-transform:uppercase;
-      color:rgba(255,255,255,0.4); margin-bottom:7px;
+      color:rgba(31,110,250,0.55); margin-bottom:7px;
+      font-family:var(--font-body);
     }
     .sidebar-welcome-name {
-      font-family:var(--font-display); font-size:1rem; color:white;
+      font-family:var(--font-display); font-size:1rem; color:#0d2a5e;
       margin-bottom:3px; line-height:1.3;
       word-break:break-word; overflow-wrap:break-word;
     }
-    .sidebar-welcome-email { font-size:0.78rem; color:var(--accent2); word-break:break-all; overflow-wrap:break-word; line-height:1.35; }
+    .sidebar-welcome-email { font-size:0.78rem; color:#1F6EFA; word-break:break-all; overflow-wrap:break-word; line-height:1.35; font-weight:500; }
     .sidebar-welcome-badge {
       display:inline-flex; align-items:center; gap:4px; margin-top:8px;
-      background:rgba(255,179,0,0.18); border:1px solid rgba(255,179,0,0.3);
-      color:var(--secondary); font-size:0.65rem; font-weight:700;
+      background:rgba(31,110,250,0.1); border:1px solid rgba(31,110,250,0.25);
+      color:#1F6EFA; font-size:0.65rem; font-weight:700;
       padding:3px 10px; border-radius:var(--radius-full); letter-spacing:0.06em;
     }
 
@@ -95,41 +97,44 @@
     .sidebar-section { margin-bottom:18px; }
     .sidebar-section-title {
       font-size:0.62rem; letter-spacing:0.13em; text-transform:uppercase;
-      color:rgba(255,255,255,0.28); padding:0 10px 8px; font-weight:700;
+      color:rgba(31,110,250,0.45); padding:0 10px 8px; font-weight:700;
+      font-family:var(--font-body);
     }
     .sidebar-link {
       display:flex; align-items:center; gap:12px; padding:10px 10px;
-      color:rgba(255,255,255,0.55); font-size:0.875rem; font-weight:500;
+      color:rgba(13,42,94,0.6); font-size:0.875rem; font-weight:500;
       transition:var(--transition); cursor:pointer;
       text-decoration:none; white-space:nowrap; position:relative;
       border-radius:var(--radius-sm);
+      font-family:var(--font-body);
     }
     .sidebar-link::before {
       content:''; position:absolute; left:0; top:18%; bottom:18%;
-      width:3px; background:var(--accent);
+      width:3px; background:linear-gradient(180deg, #1F6EFA, #4D8FFF);
       border-radius:0 3px 3px 0;
       transform:scaleY(0); transition:transform 0.3s ease;
     }
-    .sidebar-link:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.9); }
+    .sidebar-link:hover { background:rgba(31,110,250,0.1); color:#0d2a5e; }
     .sidebar-link.active {
-      background:linear-gradient(135deg, rgba(31,110,250,0.28) 0%, rgba(77,143,255,0.10) 100%);
-      color:#fff; font-weight:600;
+      background:linear-gradient(135deg, rgba(31,110,250,0.18) 0%, rgba(77,143,255,0.1) 100%);
+      color:#1558D6; font-weight:600;
     }
     .sidebar-link:hover::before, .sidebar-link.active::before { transform:scaleY(1); }
-    .sidebar-link-icon { font-size:1.1rem; width:22px; text-align:center; flex-shrink:0; }
+    .sidebar-link-icon { font-size:1.1rem; width:22px; text-align:center; flex-shrink:0; color:#4D8FFF; }
+    .sidebar-link.active .sidebar-link-icon { color:#1F6EFA; }
     .sidebar-link-badge {
-      margin-left:auto; background:var(--primary); color:white; font-size:0.65rem;
+      margin-left:auto; background:linear-gradient(135deg,#1F6EFA,#4D8FFF); color:white; font-size:0.65rem;
       padding:2px 7px; border-radius:var(--radius-full); font-weight:800;
     }
 
-    .sidebar-footer { padding:10px; border-top:1px solid rgba(255,255,255,0.07); }
+    .sidebar-footer { padding:10px; border-top:1px solid rgba(31,110,250,0.12); }
     .sidebar-logout {
       display:flex; align-items:center; gap:12px; padding:10px;
       border-radius:var(--radius-sm); font-size:0.875rem; font-weight:600;
-      color:rgba(239,83,80,0.75); cursor:pointer; transition:var(--transition); width:100%;
+      color:rgba(192,57,43,0.75); cursor:pointer; transition:var(--transition); width:100%;
       background:none; border:none;
     }
-    .sidebar-logout:hover { background:rgba(229,57,53,0.12); color:#fc8181; }
+    .sidebar-logout:hover { background:rgba(229,57,53,0.08); color:#c0392b; }
 
     .main-content {
       flex:1; margin-left:var(--sidebar-w);
@@ -139,15 +144,16 @@
 
     .top-header {
       position:fixed; top:0; left:0; width:100%; height:var(--dash-header-h);
-      z-index:1100; background:var(--dark);
-      backdrop-filter:blur(12px);
+      z-index:1100;
+      background:linear-gradient(90deg, #1F6EFA 0%, #2E80FF 50%, #1558D6 100%);
+      backdrop-filter:blur(16px);
       display:flex; align-items:center;
       padding:0 20px; gap:12px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      box-shadow:0 4px 20px rgba(0,0,0,0.25);
+      border-bottom:1px solid rgba(255,255,255,0.2);
+      box-shadow:0 4px 20px rgba(31,110,250,0.35);
     }
-
-    .header-logo-zone {
+ 
+     .header-logo-zone {
       width:calc(var(--sidebar-w) - 40px);
       flex-shrink:0;
       display:flex; align-items:center; gap:10px;
@@ -165,7 +171,7 @@
     }
     .header-separator {
       width:1.5px; height:38px;
-      background:rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.3);
       border-radius:1px; flex-shrink:0;
     }
     .header-meta { flex:1; min-width:0; overflow:hidden; }
@@ -174,14 +180,14 @@
       letter-spacing:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .header-breadcrumb {
-      font-size:0.75rem; color:rgba(255,255,255,0.5);
+      font-size:0.75rem; color:rgba(255,255,255,0.72);
       white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
     .header-right { display:flex; align-items:center; gap:8px; flex-shrink:0; margin-left:auto; }
 
     .menu-toggle {
       display:none; flex-shrink:0;
-      background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.35);
       border-radius:9px; cursor:pointer; color:#fff;
       width:40px; height:40px; position:relative;
       align-items:center; justify-content:center;
@@ -197,24 +203,24 @@
 
     .header-icon-btn {
       width:40px; height:40px;
-      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16);
+      background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
       border-radius:50%; display:flex; align-items:center; justify-content:center;
       font-size:1.05rem; cursor:pointer; transition:var(--transition);
       position:relative; text-decoration:none; color:#fff;
     }
-    .header-icon-btn:hover { background:var(--primary); border-color:var(--primary); transform:scale(1.1); }
+    .header-icon-btn:hover { background:rgba(255,255,255,0.32); border-color:rgba(255,255,255,0.5); transform:scale(1.1); }
     .header-notif-badge {
       position:absolute; top:-2px; right:-2px; width:17px; height:17px;
-      background:var(--primary-light); color:white; font-size:0.6rem;
+      background:#FF9500; color:white; font-size:0.6rem;
       border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-weight:800; border:2px solid var(--dark);
+      font-weight:800; border:2px solid #1F6EFA;
     }
-
-    .dashboard-content { padding:28px 32px; max-width:100%; box-sizing:border-box; }
+ 
+     .dashboard-content { padding:28px 32px; max-width:100%; box-sizing:border-box; }
     body.no-scroll { overflow:hidden; }
-
-    .welcome-banner {
-      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent) 100%);
+ 
+     .welcome-banner {
+      background: var(--primary);
       border-radius:var(--radius-lg); padding:32px; color:white;
       margin-bottom:28px; position:relative; overflow:hidden;
       animation:slideIn 0.5s ease forwards;
@@ -249,11 +255,17 @@
     .btn-green:hover { background:var(--primary-light); transform:translateY(-2px); }
 
     .profile-card {
-      background:white; border-radius:var(--radius-lg); padding:28px;
-      border:1.5px solid var(--border); text-align:center; margin-bottom:28px;
-      transition:var(--transition); animation:slideIn 0.5s 0.1s ease both;
+      background: white; border-radius: 16px; padding: 28px;
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-top: 4px solid var(--primary);
+      text-align: center; margin-bottom: 28px;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
+      transition: var(--transition); animation: slideIn 0.5s 0.1s ease both;
     }
-    .profile-card:hover { box-shadow:var(--shadow-lg); border-color:var(--primary); }
+    .profile-card:hover {
+      box-shadow: 0 15px 35px rgba(13, 31, 45, 0.06);
+      border-color: rgba(31, 110, 250, 0.2);
+    }
     .profile-avatar {
       width:88px; height:88px;
       background:linear-gradient(135deg, var(--primary), var(--accent));
@@ -275,17 +287,28 @@
       color:#9A6700; font-size:0.78rem; font-weight:600;
       padding:5px 14px; border-radius:20px; margin-top:14px;
     }
-
-    .stats-row {
+ 
+     .stats-row {
       display:grid; grid-template-columns:repeat(4,1fr);
       gap:18px; margin-bottom:28px;
     }
     .stat-card {
-      background:white; border-radius:var(--radius); padding:20px;
-      border:1.5px solid var(--border); transition:var(--transition);
-      text-align:center; animation:slideIn 0.5s ease both;
+      background: white; border-radius: 16px; padding: 20px;
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-left: 4px solid var(--primary);
+      transition: var(--transition);
+      text-align: center; animation: slideIn 0.5s ease both;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
     }
-    .stat-card:hover { transform:translateY(-5px); box-shadow:var(--shadow); border-color:var(--primary); }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(13, 31, 45, 0.06);
+      border-color: rgba(31, 110, 250, 0.2);
+    }
+    .stat-card:nth-child(1) { border-left-color: #2D9B5E; }
+    .stat-card:nth-child(2) { border-left-color: #FFB300; }
+    .stat-card:nth-child(3) { border-left-color: #1565C0; }
+    .stat-card:nth-child(4) { border-left-color: #00C9A7; }
     .stat-card-icon {
       width:52px; height:52px; border-radius:50%;
       display:flex; align-items:center; justify-content:center;
@@ -298,11 +321,15 @@
     .stat-card:hover .stat-card-icon { transform:scale(1.15) rotate(10deg); }
     .stat-card-value { font-family:var(--font-display); font-size:1.55rem; color:var(--dark); font-weight:700; }
     .stat-card-label { font-size:0.78rem; color:var(--text-light); margin-top:4px; }
-
-    .section-card {
-      background:white; border-radius:var(--radius-lg); padding:24px;
-      border:1.5px solid var(--border); max-width:100%; box-sizing:border-box;
-      margin-bottom:20px; min-width:0;
+ 
+     .section-card {
+      background: white; border-radius: 16px; padding: 24px;
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-top: 4px solid var(--primary);
+      max-width: 100%; box-sizing: border-box;
+      margin-bottom: 20px; min-width: 0;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
+      transition: var(--transition);
     }
     .section-card-header {
       display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;
@@ -314,12 +341,13 @@
     .two-col > * { min-width:0; overflow:hidden; }
 
     .order-card {
-      background:var(--light); border-radius:var(--radius); padding:16px;
-      border:1.5px solid var(--border-light); transition:var(--transition);
-      margin-bottom:12px; display:flex; gap:14px; align-items:center;
-      min-width:0; overflow:hidden;
+      background: #ffffff; border-radius: 12px; padding: 16px;
+      border: 1px solid rgba(31, 110, 250, 0.08); transition: var(--transition);
+      margin-bottom: 12px; display: flex; gap: 14px; align-items: center;
+      min-width: 0; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(13, 31, 45, 0.01);
     }
-    .order-card:hover { transform:translateX(4px); border-color:var(--primary); box-shadow:var(--shadow); }
+    .order-card:hover { transform: translateX(4px); border-color: var(--primary); box-shadow: 0 8px 24px rgba(13, 31, 45, 0.05); }
     .order-img {
       width:68px; height:68px; border-radius:var(--radius-sm);
       object-fit:cover; flex-shrink:0;
@@ -342,8 +370,8 @@
     .status-cancelled { background:rgba(239,83,80,0.1); color:#c0392b; }
     .status-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
     .order-price { font-family:var(--font-display); font-size:1.2rem; color:var(--primary); font-weight:700; flex-shrink:0; }
-
-    .order-action-btn {
+ 
+     .order-action-btn {
       padding:5px 12px; border-radius:var(--radius-full);
       font-size:0.72rem; font-weight:700;
       border:1.5px solid var(--primary); color:var(--primary);
@@ -351,13 +379,15 @@
       white-space:nowrap;
     }
     .order-action-btn:hover { background:var(--primary); color:white; }
-
-    .res-item {
-      display:flex; gap:14px; padding:14px; background:var(--light);
-      border-radius:var(--radius-sm); margin-bottom:10px; transition:var(--transition);
-      border-left:3px solid transparent; align-items:center;
+ 
+     .res-item {
+      display: flex; gap: 14px; padding: 14px; background: #ffffff;
+      border-radius: 8px; margin-bottom: 10px; transition: var(--transition);
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-left: 4px solid transparent; align-items: center;
+      box-shadow: 0 4px 12px rgba(13, 31, 45, 0.01);
     }
-    .res-item:hover { border-left-color:var(--primary); transform:translateX(4px); background:var(--primary-pale); }
+    .res-item:hover { border-left-color: var(--primary); border-color: rgba(31, 110, 250, 0.2); transform: translateX(4px); background: var(--primary-pale); }
     .res-date {
       width:52px; height:52px; background:var(--primary); border-radius:var(--radius-sm);
       display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -373,8 +403,8 @@
     }
     .res-badge.confirmed { background:rgba(31,110,250,0.1); color:var(--primary); }
     .res-badge.upcoming { background:rgba(255,179,0,0.12); color:#9A6700; }
-
-    .fav-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+ 
+     .fav-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
     .fav-item {
       background:white; border-radius:var(--radius); overflow:hidden;
       border:1.5px solid var(--border); transition:var(--transition); cursor:pointer;
@@ -393,14 +423,16 @@
     .fav-item-price { font-family:var(--font-display); font-size:1.05rem; color:var(--primary); font-weight:700; }
     .fav-item-footer { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
     .fav-heart { font-size:1rem; color:#e74c3c; }
-
-    .reward-card {
-      background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
-      border-radius:var(--radius-lg); padding:24px; color:white;
-      position:relative; overflow:hidden; margin-bottom:24px;
+ 
+     .reward-card {
+      background: #0f172a;
+      border-radius: 16px; padding: 24px; color: white;
+      position: relative; overflow: hidden; margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .reward-card::before {
-      content:'⭐'; position:absolute; right:-15px; top:-15px;
+      content:'\f005'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+      position:absolute; right:-15px; top:-15px;
       font-size:8rem; opacity:0.04; pointer-events:none;
     }
     .reward-card-title { font-family:var(--font-display); font-size:1.35rem; letter-spacing:1.5px; margin-bottom:7px; }
@@ -537,8 +569,9 @@
     .settings-grid { display:grid; grid-template-columns:1.2fr 0.8fr; gap:16px; }
     .settings-stack { display:flex; flex-direction:column; gap:14px; }
     .settings-panel {
-      background:var(--light); border:1.5px solid var(--border-light);
-      border-radius:var(--radius); padding:18px;
+      background: #ffffff; border: 1px solid rgba(31, 110, 250, 0.08);
+      border-radius: 16px; padding: 18px;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
     }
     .settings-panel-title {
       font-weight:700; color:var(--dark); font-size:0.93rem;
@@ -551,13 +584,17 @@
     }
     .settings-input {
       width:100%; padding:11px 13px;
-      border:1.5px solid var(--border);
-      border-radius:var(--radius-sm);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       font-family:var(--font-body); font-size:0.87rem; background:#fff;
-      transition:border-color 0.2s;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       color:var(--text);
     }
-    .settings-input:focus { outline:none; border-color:var(--primary); }
+    .settings-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3.5px rgba(31, 110, 250, 0.10);
+      outline: none;
+    }
     .settings-option {
       display:flex; justify-content:space-between; gap:12px; align-items:center;
       padding:11px 0; border-top:1px solid var(--border-light);
@@ -657,8 +694,8 @@
       .top-header {
         position:fixed; left:0; right:0; top:0; width:100%;
         padding:0 12px; gap:8px;
-        background:var(--dark);
-        border-bottom:1px solid rgba(255,255,255,0.08);
+        background:linear-gradient(90deg, #1F6EFA 0%, #2E80FF 100%);
+        border-bottom:1px solid rgba(255,255,255,0.2);
         justify-content:flex-start;
       }
       .header-logo-zone {
@@ -763,7 +800,7 @@
       width: 100%;
       padding: 0.85rem 1rem 0.85rem 2.75rem;
       background: #ffffff;
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 8px;
       font-family: var(--font-body);
       font-size: 0.9rem;
@@ -804,9 +841,243 @@
     .settings-field-custom.has-error .settings-icon-custom {
       color: #E53E3E !important;
     }
+
+
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background-color: #0d0e12;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .preloader-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
+    .battery-loader {
+      width: 220px;
+      height: 90px;
+      border: 4px solid #ffffff;
+      border-radius: 16px;
+      position: relative;
+      padding: 6px;
+      box-shadow: 0 0 30px rgba(31, 110, 250, 0.25);
+      margin-bottom: 22px;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    
+    .battery-loader::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -13px;
+      transform: translateY(-50%);
+      width: 9px;
+      height: 30px;
+      background-color: #ffffff;
+      border-radius: 0 6px 6px 0;
+    }
+
+    
+    .battery-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1F6EFA 0%, #00D4FF 100%);
+      border-radius: 10px;
+      transition: width 0.15s ease-out;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+
+    
+    .bolt-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.8rem;
+      color: #ffffff;
+      z-index: 5;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      animation: pulseBolt 1.2s ease-in-out infinite;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    
+    .loader-logo-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      z-index: 6;
+      pointer-events: none;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      opacity: 1;
+      transition: opacity 0.15s ease;
+    }
+
+    @keyframes pulseBolt {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; color: #00D4FF; text-shadow: 0 0 12px rgba(0, 212, 255, 0.8); }
+    }
+
+    
+    .charge-percentage {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .charge-status {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #8E94A8;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      animation: pulseText 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .chart-bar-rect {
+      transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+      transform-origin: bottom;
+    }
+    .chart-bar-rect:hover {
+      opacity: 0.85;
+      filter: drop-shadow(0 4px 10px rgba(31, 110, 250, 0.45));
+      transform: scaleY(1.03);
+    }
   </style>
 </head>
 <body>
+
+  
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="battery-loader">
+        <div class="battery-fill" id="preloaderFill"></div>
+        <div class="bolt-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="loader-logo-text" id="preloaderLogo">Stackly</div>
+      </div>
+      <div class="charge-percentage" id="preloaderPercent">0%</div>
+      <div class="charge-status">Connecting Charger...</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (!preloader) return;
+
+      var percentEl = document.getElementById('preloaderPercent');
+      var fillEl = document.getElementById('preloaderFill');
+      var statusEl = preloader.querySelector('.charge-status');
+      var logoEl = document.getElementById('preloaderLogo');
+      var boltEl = preloader.querySelector('.bolt-icon');
+      
+      if (!percentEl || !fillEl || !statusEl) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() { preloader.style.display = 'none'; }, 400);
+        return;
+      }
+
+      var count = 0;
+      var duration = 1600; 
+      var intervalTime = 16;
+      var step = 100 / (duration / intervalTime);
+      
+      var statusPhrases = [
+        "Connecting Charger...",
+        "Authenticating Vehicle...",
+        "Analyzing Battery Health...",
+        "Charging EV Stack...",
+        "Ready to Go!"
+      ];
+
+      if (logoEl) logoEl.style.opacity = '1';
+      if (boltEl) boltEl.style.opacity = '0';
+
+      var timer = setInterval(function() {
+        count += step;
+        if (count >= 100) {
+          count = 100;
+          clearInterval(timer);
+          percentEl.textContent = "100%";
+          fillEl.style.width = "100%";
+          statusEl.textContent = "Ready to Go!";
+          if (logoEl) logoEl.style.opacity = '0';
+          if (boltEl) boltEl.style.opacity = '1';
+          
+          setTimeout(function() {
+            preloader.classList.add('fade-out');
+            setTimeout(function() {
+              preloader.style.display = 'none';
+            }, 400);
+          }, 250);
+        } else {
+          var rounded = Math.floor(count);
+          percentEl.textContent = rounded + "%";
+          fillEl.style.width = rounded + "%";
+          
+          var logoOpacity = Math.max(0, 1 - count / 50);
+          var boltOpacity = Math.max(0, Math.min(1, (count - 35) / 45));
+          
+          if (logoEl) logoEl.style.opacity = logoOpacity;
+          if (boltEl) boltEl.style.opacity = boltOpacity;
+
+          if (rounded < 20) {
+            statusEl.textContent = statusPhrases[0];
+          } else if (rounded < 45) {
+            statusEl.textContent = statusPhrases[1];
+          } else if (rounded < 70) {
+            statusEl.textContent = statusPhrases[2];
+          } else {
+            statusEl.textContent = statusPhrases[3];
+          }
+        }
+      }, intervalTime);
+
+    
+      setTimeout(function() {
+        if (preloader && !preloader.classList.contains('fade-out')) {
+          preloader.classList.add('fade-out');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+      }, 2500);
+    })();
+  </script>
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
@@ -823,7 +1094,7 @@
       <p class="sidebar-welcome-label">Welcome back</p>
       <div class="sidebar-welcome-name" id="userName">Guest User</div>
       <div class="sidebar-welcome-email" id="userEmail">guest@example.com</div>
-      <div class="sidebar-welcome-badge">⭐ Silver Member</div>
+      <div class="sidebar-welcome-badge"><i class="fa-solid fa-star"></i> Silver Member</div>
     </div>
 
     <nav class="sidebar-nav">
@@ -831,20 +1102,20 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">My Account</div>
         <a href="customer-dashboard.html" class="sidebar-link active" onclick="showSection('dashboardHome', event)">
-          <span class="sidebar-link-icon">🏠</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-house"></i></span>
           <span class="sidebar-link-text">Dashboard</span>
         </a>
         <a href="#orders" class="sidebar-link" onclick="showSection('ordersSection', event)">
-          <span class="sidebar-link-icon">📊</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-chart-line"></i></span>
           <span class="sidebar-link-text">My Charging Sessions</span>
           <span class="sidebar-link-badge">3</span>
         </a>
         <a href="#reservations" class="sidebar-link" onclick="showSection('reservationsSection', event)">
-          <span class="sidebar-link-icon">📅</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-calendar-days"></i></span>
           <span class="sidebar-link-text">Site Inspections</span>
         </a>
         <a href="#favorites" class="sidebar-link" onclick="showSection('favoritesSection', event)">
-          <span class="sidebar-link-icon">❤️</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-heart"></i></span>
           <span class="sidebar-link-text">Saved Stations</span>
         </a>
       </div>
@@ -852,15 +1123,15 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Rewards</div>
         <a href="#rewards" class="sidebar-link" onclick="showSection('rewardsSection', event)">
-          <span class="sidebar-link-icon">⭐</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-star"></i></span>
           <span class="sidebar-link-text">Energy Credits</span>
         </a>
         <a href="#offers" class="sidebar-link" onclick="showSection('offersSection', event)">
-          <span class="sidebar-link-icon">🎁</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-gift"></i></span>
           <span class="sidebar-link-text">Plans & Offers</span>
         </a>
         <a href="#coupons" class="sidebar-link" onclick="showSection('couponsSection', event)">
-          <span class="sidebar-link-icon">🎟️</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-ticket"></i></span>
           <span class="sidebar-link-text">My Vouchers</span>
         </a>
       </div>
@@ -868,11 +1139,11 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Settings</div>
         <a href="#notifications" class="sidebar-link" onclick="showSection('notificationsSection', event)">
-          <span class="sidebar-link-icon">🔔</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-bell"></i></span>
           <span class="sidebar-link-text">Notifications</span>
         </a>
         <a href="#settings" class="sidebar-link" onclick="showSection('settingsSection', event)">
-          <span class="sidebar-link-icon">⚙️</span>
+          <span class="sidebar-link-icon"><i class="fa-solid fa-gear"></i></span>
           <span class="sidebar-link-text">Settings</span>
         </a>
       </div>
@@ -880,7 +1151,7 @@
 
     <div class="sidebar-footer">
       <button class="sidebar-logout" onclick="handleLogout()">
-        <span style="font-size:1.1rem;">🚪</span>
+        <i class="fa-solid fa-right-from-bracket" style="font-size:1.1rem; margin-right: 8px;"></i>
         <span>Logout</span>
       </button>
     </div>
@@ -913,7 +1184,7 @@
       <div class="header-right">
         <a href="#notifications" class="header-icon-btn" title="Notifications"
            onclick="showSection('notificationsSection', event)">
-          🔔
+          <i class="fa-solid fa-bell"></i>
           <span class="header-notif-badge">3</span>
         </a>
       </div>
@@ -924,16 +1195,16 @@
       <div id="dashboardHome" style="overflow-x:hidden; min-width:0;">
 
         <div class="welcome-banner animate-in">
-          <h2 id="welcomeText">Welcome Back! 👋</h2>
+          <h2 id="welcomeText">Welcome Back!</h2>
           <p>Ready to manage your EV infrastructure? Monitor charging stations, track energy usage, and schedule site inspections — all from one dashboard.</p>
           <div class="welcome-banner-btns">
-            <a href="404.html" class="btn btn-dark">⚡ View Stations</a>
-            <a href="404.html" class="btn btn-outline" onclick="show404Modal()">📅 Schedule Inspection</a>
+            <a href="404.html" class="btn btn-dark"><i class="fa-solid fa-charging-station"></i> View Stations</a>
+            <a href="404.html" class="btn btn-outline" onclick="show404Modal()"><i class="fa-solid fa-calendar-days"></i> Schedule Inspection</a>
           </div>
         </div>
 
         <div class="profile-card animate-in delay-1">
-          <div class="profile-avatar" id="profileAvatar">👤</div>
+          <div class="profile-avatar" id="profileAvatar"><i class="fa-solid fa-user"></i></div>
           <div class="profile-name" id="profileName">Guest User</div>
           <div class="profile-email" id="profileEmail">guest@example.com</div>
           <div class="profile-meta">
@@ -954,27 +1225,27 @@
               <div class="profile-meta-label">Spent</div>
             </div>
           </div>
-          <div class="profile-badge">⭐ Silver Member</div>
+          <div class="profile-badge"><i class="fa-solid fa-star"></i> Silver Member</div>
         </div>
 
         <div class="stats-row">
           <div class="stat-card animate-in delay-1">
-            <div class="stat-card-icon green">📊</div>
+            <div class="stat-card-icon green"><i class="fa-solid fa-chart-line"></i></div>
             <div class="stat-card-value">156</div>
             <div class="stat-card-label">Charging Sessions</div>
           </div>
           <div class="stat-card animate-in delay-2">
-            <div class="stat-card-icon gold">⭐</div>
+            <div class="stat-card-icon gold"><i class="fa-solid fa-star"></i></div>
             <div class="stat-card-value">2,840</div>
             <div class="stat-card-label">Energy Credits</div>
           </div>
           <div class="stat-card animate-in delay-3">
-            <div class="stat-card-icon teal">💰</div>
+            <div class="stat-card-icon teal"><i class="fa-solid fa-indian-rupee-sign"></i></div>
             <div class="stat-card-value">₹42,498</div>
             <div class="stat-card-label">Total Energy Cost</div>
           </div>
           <div class="stat-card animate-in delay-4">
-            <div class="stat-card-icon emerald">🎁</div>
+            <div class="stat-card-icon emerald"><i class="fa-solid fa-charging-station"></i></div>
             <div class="stat-card-value">4</div>
             <div class="stat-card-label">Active Stations</div>
           </div>
@@ -984,7 +1255,7 @@
 
           <div class="section-card animate-in" id="ordersSection">
             <div class="section-card-header">
-              <div class="section-card-title">⚡ Recent Charging Sessions</div>
+              <div class="section-card-title"><i class="fa-solid fa-charging-station"></i> Recent Charging Sessions</div>
               <button class="btn btn-primary btn-sm" onclick="showSection('ordersSection', event)">View All</button>
             </div>
 
@@ -1030,7 +1301,7 @@
             <div style="margin-top:16px;">
               <div class="insight-panel dark">
                 <div>
-                  <div class="insight-kicker">This Month</div>
+                   <div class="insight-kicker">This Month</div>
                   <div class="insight-title">3 recent charging sessions</div>
                   <p class="insight-text">DC fast charging, fleet depot, and public station usage. Fast renewal is ready.</p>
                 </div>
@@ -1046,7 +1317,7 @@
 
           <div class="section-card animate-in delay-1" id="reservationsSection">
             <div class="section-card-header">
-              <div class="section-card-title">📅 Upcoming Site Inspections</div>
+              <div class="section-card-title"><i class="fa-solid fa-calendar-days"></i> Upcoming Site Inspections</div>
               <button class="btn btn-primary btn-sm" onclick="show404()">Book New</button>
             </div>
 
@@ -1056,7 +1327,7 @@
                 <div class="res-date-month">JUN</div>
               </div>
               <div class="res-details">
-                <h4>Q3 Station Maintenance ⚡</h4>
+                <h4>Q3 Station Maintenance <i class="fa-solid fa-bolt"></i></h4>
                 <p>3:00 PM • On-Site • Engineer Rajesh K.</p>
               </div>
               <span class="res-badge confirmed">Confirmed</span>
@@ -1068,7 +1339,7 @@
                 <div class="res-date-month">JUN</div>
               </div>
               <div class="res-details">
-                <h4>New Station Setup Review 📊</h4>
+                <h4>New Station Setup Review <i class="fa-solid fa-chart-line"></i></h4>
                 <p>11:00 AM • Site Visit • Engineer Priya S.</p>
               </div>
               <span class="res-badge upcoming">Scheduled</span>
@@ -1080,7 +1351,7 @@
                 <div class="res-date-month">JUL</div>
               </div>
               <div class="res-details">
-                <h4>Fleet Depot Expansion Planning 🏢</h4>
+                <h4>Fleet Depot Expansion Planning <i class="fa-solid fa-building"></i></h4>
                 <p>4:30 PM • Video Call • Manager Arun V.</p>
               </div>
               <span class="res-badge upcoming">Scheduled</span>
@@ -1106,7 +1377,7 @@
 
         <div class="section-card animate-in" id="favoritesSection">
           <div class="section-card-header">
-            <div class="section-card-title">⚡ Saved Stations</div>
+            <div class="section-card-title"><i class="fa-solid fa-bookmark"></i> Saved Stations</div>
             <button class="btn btn-primary btn-sm" onclick="show404()">Browse Stations</button>
           </div>
           <div class="fav-grid">
@@ -1119,7 +1390,7 @@
                 <div class="fav-item-desc">Smart wall-mounted home charger with app scheduling and energy monitoring.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹24,999</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1132,7 +1403,7 @@
                 <div class="fav-item-desc">Dual-port commercial AC charger for office parking and retail spaces.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹49,999</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1145,7 +1416,7 @@
                 <div class="fav-item-desc">CCS2 rapid charger for public stations and highway corridors.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹1,49,999</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1158,7 +1429,7 @@
                 <div class="fav-item-desc">Premium ultra-rapid charger for fleet depots and high-traffic locations.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹3,99,999</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1171,7 +1442,7 @@
                 <div class="fav-item-desc">Integrated solar-powered charging station with battery storage.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹5,99,999</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1184,7 +1455,7 @@
                 <div class="fav-item-desc">Cloud-based fleet charging management with RFID access and analytics.</div>
                 <div class="fav-item-footer">
                   <div class="fav-item-price">₹14,999/yr</div>
-                  <span class="fav-heart">❤️</span>
+                  <span class="fav-heart"><i class="fa-solid fa-heart" style="color: #e74c3c;"></i></span>
                 </div>
               </div>
             </div>
@@ -1194,7 +1465,7 @@
         <div id="rewardsSection">
           
           <div class="reward-card animate-in">
-            <div class="reward-card-title">🎯 Your EV Credits Progress</div>
+            <div class="reward-card-title"><i class="fa-solid fa-bullseye"></i> Your EV Credits Progress</div>
             <div class="reward-card-text">You're 65% of the way to Gold Member status! Continue charging and maintaining stations to unlock priority support, discounted energy rates, and free station audits.</div>
             <div class="reward-progress">
               <div class="reward-progress-bar" id="rewardProgressBar"></div>
@@ -1206,15 +1477,15 @@
                 <div class="reward-tier-pts">0 pts</div>
               </div>
               <div class="reward-tier active">
-                <div class="reward-tier-name">⭐ Silver</div>
+                <div class="reward-tier-name"><i class="fa-solid fa-star"></i> Silver</div>
                 <div class="reward-tier-pts">200 pts</div>
               </div>
               <div class="reward-tier">
-                <div class="reward-tier-name">🥇 Gold</div>
+                <div class="reward-tier-name"><i class="fa-solid fa-medal"></i> Gold</div>
                 <div class="reward-tier-pts">500 pts</div>
               </div>
               <div class="reward-tier">
-                <div class="reward-tier-name">💎 Platinum</div>
+                <div class="reward-tier-name"><i class="fa-solid fa-gem"></i> Platinum</div>
                 <div class="reward-tier-pts">1000 pts</div>
               </div>
             </div>
@@ -1222,76 +1493,110 @@
 
           <div class="section-card animate-in" style="margin-top:20px;">
             <div class="section-card-header">
-              <div class="section-card-title">⭐ Credit Points History</div>
+              <div class="section-card-title"><i class="fa-solid fa-history"></i> Credit Points History</div>
               <button class="btn btn-primary btn-sm" onclick="show404()">Redeem Now</button>
             </div>
             
             <div style="margin-bottom:16px;">
-              <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Monthly Service Spend (₹) & Credits History</div>
-              <div class="chart-container" style="position:relative; width:100%; margin-top:10px; margin-bottom:20px; overflow:visible;">
-                
-                <svg viewBox="0 0 500 185" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block; overflow:visible; height:auto;">
+              <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Monthly Service Spend (₹) &amp; Credits History</div>
+              
+              <div style="display:flex;gap:18px;margin-bottom:14px;flex-wrap:wrap;">
+                <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text-light);font-weight:600;">
+                  <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:linear-gradient(180deg,#4D8FFF,#1F6EFA);"></span>Q1 (Jan–Mar)
+                </span>
+                <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text-light);font-weight:600;">
+                  <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:linear-gradient(180deg,#FFB300,#FF9500);"></span>Q2 Growth
+                </span>
+                <span style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text-light);font-weight:600;">
+                  <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:linear-gradient(180deg,#00D4FF,#1F6EFA);"></span>Peak (Jun)
+                </span>
+              </div>
+              
+              <div class="chart-container" style="position:relative;width:100%;overflow:visible;">
+                <svg viewBox="0 0 560 220" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" style="display:block;overflow:visible;">
                   <defs>
-                    
-                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.25"/>
-                      <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.0"/>
+                    <linearGradient id="bBG" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#4D8FFF"/>
+                      <stop offset="100%" stop-color="#1F6EFA" stop-opacity="0.85"/>
                     </linearGradient>
+                    <linearGradient id="bOG" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#FFD54F"/>
+                      <stop offset="100%" stop-color="#FF9500" stop-opacity="0.9"/>
+                    </linearGradient>
+                    <linearGradient id="bCG" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#00E5FF"/>
+                      <stop offset="100%" stop-color="#1F6EFA" stop-opacity="0.9"/>
+                    </linearGradient>
+                    <filter id="barShadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="rgba(31,110,250,0.25)"/>
+                    </filter>
                   </defs>
 
-                  <line x1="50" y1="25" x2="50" y2="145" stroke="rgba(0,0,0,0.04)" />
-                  <line x1="136" y1="25" x2="136" y2="145" stroke="rgba(0,0,0,0.04)" />
-                  <line x1="222" y1="25" x2="222" y2="145" stroke="rgba(0,0,0,0.04)" />
-                  <line x1="308" y1="25" x2="308" y2="145" stroke="rgba(0,0,0,0.04)" />
-                  <line x1="394" y1="25" x2="394" y2="145" stroke="rgba(0,0,0,0.04)" />
-                  <line x1="480" y1="25" x2="480" y2="145" stroke="rgba(0,0,0,0.04)" />
-
-                  <line x1="50" y1="25" x2="480" y2="25" stroke="rgba(0,0,0,0.05)" stroke-dasharray="4 4" />
-                  <text x="40" y="29" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="end">₹20k</text>
                   
-                  <line x1="50" y1="55" x2="480" y2="55" stroke="rgba(0,0,0,0.05)" stroke-dasharray="4 4" />
-                  <text x="40" y="59" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="end">₹15k</text>
+                  <line x1="50" y1="15" x2="50" y2="165" stroke="rgba(0,0,0,0.1)" stroke-width="1.5"/>
                   
-                  <line x1="50" y1="85" x2="480" y2="85" stroke="rgba(0,0,0,0.05)" stroke-dasharray="4 4" />
-                  <text x="40" y="89" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="end">₹10k</text>
+                  <line x1="50" y1="165" x2="545" y2="165" stroke="rgba(31,110,250,0.25)" stroke-width="1.5"/>
+
                   
-                  <line x1="50" y1="115" x2="480" y2="115" stroke="rgba(0,0,0,0.05)" stroke-dasharray="4 4" />
-                  <text x="40" y="119" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="end">₹5k</text>
+                  <line x1="50" y1="15"  x2="545" y2="15"  stroke="rgba(0,0,0,0.05)" stroke-dasharray="5 4"/>
+                  <text x="44" y="19"  text-anchor="end" fill="#8E94A8" font-size="10" font-weight="600">₹20k</text>
+
+                  <line x1="50" y1="52"  x2="545" y2="52"  stroke="rgba(0,0,0,0.05)" stroke-dasharray="5 4"/>
+                  <text x="44" y="56"  text-anchor="end" fill="#8E94A8" font-size="10" font-weight="600">₹15k</text>
+
+                  <line x1="50" y1="90"  x2="545" y2="90"  stroke="rgba(0,0,0,0.05)" stroke-dasharray="5 4"/>
+                  <text x="44" y="94"  text-anchor="end" fill="#8E94A8" font-size="10" font-weight="600">₹10k</text>
+
+                  <line x1="50" y1="127" x2="545" y2="127" stroke="rgba(0,0,0,0.05)" stroke-dasharray="5 4"/>
+                  <text x="44" y="131" text-anchor="end" fill="#8E94A8" font-size="10" font-weight="600">₹5k</text>
+
+                  <text x="44" y="169" text-anchor="end" fill="#8E94A8" font-size="10" font-weight="600">₹0</text>
+
                   
-                  <line x1="50" y1="145" x2="480" y2="145" stroke="var(--primary)" stroke-opacity="0.15" stroke-width="1.5" />
-                  <text x="40" y="149" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="end">₹0</text>
+                  
+                  
+                  
+                  
+                  
+                  
 
-                  <path d="M 50 145 L 50 121 L 136 109 L 222 124 L 308 85 L 394 61 L 480 34 L 480 145 Z" fill="url(#chartGrad)"/>
+                  
+                  <rect x="89"  y="135" width="52" height="30" rx="6" fill="url(#bBG)" filter="url(#barShadow)"/>
+                  <text x="115" y="128" text-anchor="middle" fill="#1F6EFA" font-size="10" font-weight="700">₹4k</text>
 
-                  <path d="M 50 121 L 136 109 L 222 124 L 308 85 L 394 61 L 480 34" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  
+                  <rect x="171" y="120" width="52" height="45" rx="6" fill="url(#bBG)" filter="url(#barShadow)"/>
+                  <text x="197" y="113" text-anchor="middle" fill="#1F6EFA" font-size="10" font-weight="700">₹6k</text>
 
-                  <circle cx="50" cy="121" r="4" fill="var(--primary)" stroke="#fff" stroke-width="2" />
-                  <circle cx="136" cy="109" r="4" fill="var(--primary)" stroke="#fff" stroke-width="2" />
-                  <circle cx="222" cy="124" r="4" fill="var(--primary)" stroke="#fff" stroke-width="2" />
+                  
+                  <rect x="253" y="139" width="52" height="26" rx="6" fill="url(#bBG)" filter="url(#barShadow)"/>
+                  <text x="279" y="132" text-anchor="middle" fill="#1F6EFA" font-size="10" font-weight="700">₹3.5k</text>
 
-                  <circle cx="308" cy="85" r="5" fill="var(--accent)" stroke="#fff" stroke-width="2" />
-                  <circle cx="394" cy="61" r="5" fill="var(--accent)" stroke="#fff" stroke-width="2" />
-                  <circle cx="480" cy="34" r="6" fill="var(--primary)" stroke="#fff" stroke-width="2.5" />
+                  
+                  <rect x="335" y="90"  width="52" height="75" rx="6" fill="url(#bOG)" filter="url(#barShadow)"/>
+                  <text x="361" y="83"  text-anchor="middle" fill="#FF9500" font-size="10" font-weight="700">₹10k</text>
 
-                  <text x="50" y="110" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="middle">₹4k</text>
-                  <text x="136" y="98" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="middle">₹6k</text>
-                  <text x="222" y="113" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="middle">₹3.5k</text>
-                  <text x="308" y="74" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="middle">₹10k</text>
-                  <text x="394" y="50" fill="var(--text-light)" font-size="9" font-weight="600" text-anchor="middle">₹14k</text>
-                  <text x="480" y="20" fill="var(--primary)" font-size="10" font-weight="700" text-anchor="middle">₹18.5k</text>
+                  
+                  <rect x="417" y="60"  width="52" height="105" rx="6" fill="url(#bOG)" filter="url(#barShadow)"/>
+                  <text x="443" y="53"  text-anchor="middle" fill="#FF9500" font-size="10" font-weight="700">₹14k</text>
 
-                  <text x="50" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">Jan</text>
-                  <text x="136" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">Feb</text>
-                  <text x="222" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">Mar</text>
-                  <text x="308" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">Apr</text>
-                  <text x="394" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">May</text>
-                  <text x="480" y="165" fill="var(--text-light)" font-size="10" font-weight="600" text-anchor="middle">Jun</text>
+                  
+                  <rect x="499" y="26"  width="52" height="139" rx="6" fill="url(#bCG)" filter="url(#barShadow)"/>
+                  <text x="525" y="19"  text-anchor="middle" fill="#1F6EFA" font-size="10" font-weight="800">₹18.5k</text>
+
+                  
+                  <text x="115" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">Jan</text>
+                  <text x="197" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">Feb</text>
+                  <text x="279" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">Mar</text>
+                  <text x="361" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">Apr</text>
+                  <text x="443" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">May</text>
+                  <text x="525" y="182" text-anchor="middle" fill="#8E94A8" font-size="11" font-weight="600">Jun</text>
                 </svg>
               </div>
             </div>
             <div class="loyalty-grid">
               <div class="loyalty-hist-item">
-                <div class="loyalty-hist-icon earn">⬆️</div>
+                <div class="loyalty-hist-icon earn"><i class="fa-solid fa-arrow-up"></i></div>
                 <div class="loyalty-hist-body">
                   <div class="loyalty-hist-title">Earned — DC Fast Charge Session</div>
                   <div class="loyalty-hist-date">28 May 2026</div>
@@ -1299,7 +1604,7 @@
                 <div class="loyalty-hist-pts positive">+50 pts</div>
               </div>
               <div class="loyalty-hist-item">
-                <div class="loyalty-hist-icon earn">⬆️</div>
+                <div class="loyalty-hist-icon earn"><i class="fa-solid fa-arrow-up"></i></div>
                 <div class="loyalty-hist-body">
                   <div class="loyalty-hist-title">Earned — Fleet Depot Monthly Plan</div>
                   <div class="loyalty-hist-date">22 May 2026</div>
@@ -1307,7 +1612,7 @@
                 <div class="loyalty-hist-pts positive">+45 pts</div>
               </div>
               <div class="loyalty-hist-item">
-                <div class="loyalty-hist-icon redeem">⬇️</div>
+                <div class="loyalty-hist-icon redeem"><i class="fa-solid fa-arrow-down"></i></div>
                 <div class="loyalty-hist-body">
                   <div class="loyalty-hist-title">Redeemed — ₹500 Charging Credit</div>
                   <div class="loyalty-hist-date">10 May 2026</div>
@@ -1315,7 +1620,7 @@
                 <div class="loyalty-hist-pts negative">−100 pts</div>
               </div>
               <div class="loyalty-hist-item">
-                <div class="loyalty-hist-icon earn">⬆️</div>
+                <div class="loyalty-hist-icon earn"><i class="fa-solid fa-arrow-up"></i></div>
                 <div class="loyalty-hist-body">
                   <div class="loyalty-hist-title">Bonus — Member Anniversary Reward</div>
                   <div class="loyalty-hist-date">01 May 2026</div>
@@ -1328,7 +1633,7 @@
 
         <div class="section-card animate-in" id="offersSection">
           <div class="section-card-header">
-            <div class="section-card-title">🎁 Special Offers For You</div>
+            <div class="section-card-title"><i class="fa-solid fa-gift"></i> Special Offers For You</div>
             <button class="btn btn-primary btn-sm" onclick="show404()">View All</button>
           </div>
           <div class="offers-grid">
@@ -1337,35 +1642,35 @@
               <div class="offer-card-desc">On your next charging plan renewal! Save on quarterly and annual subscriptions.</div>
               <div class="offer-code">Code: STACK20</div>
               <div class="offer-expiry">Valid till 30 Jun 2026</div>
-              <span class="offer-emoji">📊</span>
+              <i class="fa-solid fa-chart-pie offer-emoji"></i>
             </div>
             <div class="offer-card" style="background:linear-gradient(135deg,var(--dark),var(--dark2));">
               <div class="offer-card-discount">FREE AUDIT</div>
               <div class="offer-card-desc">With any commercial installation! Get a free energy audit and load assessment.</div>
               <div class="offer-code">Code: EXPERT</div>
               <div class="offer-expiry">Valid till 15 Jul 2026</div>
-              <span class="offer-emoji">💼</span>
+              <i class="fa-solid fa-briefcase offer-emoji"></i>
             </div>
             <div class="offer-card" style="background:linear-gradient(135deg,#9C27B0,#673AB7);">
               <div class="offer-card-discount">₹5,000 OFF</div>
               <div class="offer-card-desc">On Commercial Station Installation! Limited time offer.</div>
               <div class="offer-code">Code: STARTUP500</div>
               <div class="offer-expiry">Valid on weekdays</div>
-              <span class="offer-emoji">🏢</span>
+              <i class="fa-solid fa-building offer-emoji"></i>
             </div>
             <div class="offer-card" style="background:linear-gradient(135deg,#FF6B35,#FF9800);">
               <div class="offer-card-discount">FREE SETUP</div>
               <div class="offer-card-desc">With any home charger purchase! Free wall mounting and electrical setup.</div>
               <div class="offer-code">Code: PANREG</div>
               <div class="offer-expiry">Valid till 31 Dec 2026</div>
-              <span class="offer-emoji">📄</span>
+              <i class="fa-solid fa-file-contract offer-emoji"></i>
             </div>
           </div>
         </div>
 
         <div class="section-card animate-in" id="couponsSection">
           <div class="section-card-header">
-            <div class="section-card-title">🎟️ My Vouchers</div>
+            <div class="section-card-title"><i class="fa-solid fa-ticket"></i> My Vouchers</div>
           </div>
           <div class="coupons-grid">
             <div class="coupon-card">
@@ -1391,12 +1696,12 @@
 
         <div class="section-card animate-in" id="notificationsSection" style="display:none;">
           <div class="section-card-header">
-            <div class="section-card-title">🔔 Notifications</div>
+            <div class="section-card-title"><i class="fa-solid fa-bell"></i> Notifications</div>
             <button class="btn btn-sm" style="color:var(--text-light);border:1.5px solid var(--border);" onclick="show404()">Mark All Read</button>
           </div>
           <div class="notif-list">
             <div class="notif-item">
-              <span class="notif-icon">📄</span>
+              <span class="notif-icon"><i class="fa-solid fa-file-invoice"></i></span>
               <div class="notif-body">
                 <div class="notif-text">Your charging session #CHG-2847 has been completed successfully!</div>
                 <div class="notif-time">2 minutes ago</div>
@@ -1404,7 +1709,7 @@
               <div class="notif-unread"></div>
             </div>
             <div class="notif-item gold">
-              <span class="notif-icon">⭐</span>
+              <span class="notif-icon"><i class="fa-solid fa-star"></i></span>
               <div class="notif-body">
                 <div class="notif-text">You earned 50 energy credits from your last charging session!</div>
                 <div class="notif-time">1 hour ago</div>
@@ -1412,7 +1717,7 @@
               <div class="notif-unread" style="background:var(--secondary);"></div>
             </div>
             <div class="notif-item teal">
-              <span class="notif-icon">🎁</span>
+              <span class="notif-icon"><i class="fa-solid fa-gift"></i></span>
               <div class="notif-body">
                 <div class="notif-text">New offer: 20% OFF on your next station maintenance plan!</div>
                 <div class="notif-time">3 hours ago</div>
@@ -1420,14 +1725,14 @@
               <div class="notif-unread" style="background:var(--accent2);"></div>
             </div>
             <div class="notif-item">
-              <span class="notif-icon">📅</span>
+              <span class="notif-icon"><i class="fa-solid fa-calendar-days"></i></span>
               <div class="notif-body">
                 <div class="notif-text">Site inspection confirmed for June 15, 3:00 PM — On-Site Visit.</div>
                 <div class="notif-time">Yesterday</div>
               </div>
             </div>
             <div class="notif-item gold">
-              <span class="notif-icon">🏆</span>
+              <span class="notif-icon"><i class="fa-solid fa-trophy"></i></span>
               <div class="notif-body">
                 <div class="notif-text">You're 65% to Gold Member status! 150 more points to unlock priority technical support.</div>
                 <div class="notif-time">2 days ago</div>
@@ -1438,13 +1743,13 @@
 
         <div class="section-card animate-in" id="settingsSection" style="display:none;">
           <div class="section-card-header">
-            <div class="section-card-title">⚙️ Account Settings</div>
+            <div class="section-card-title"><i class="fa-solid fa-gear"></i> Account Settings</div>
           </div>
           <form id="settingsForm" onsubmit="handleSaveChanges(event)" novalidate style="display:contents;">
             <div class="settings-grid">
               <div class="settings-stack">
                 <div class="settings-panel">
-                  <div class="settings-panel-title">👤 Profile Details</div>
+                  <div class="settings-panel-title"><i class="fa-solid fa-user"></i> Profile Details</div>
                   <div class="settings-fields-custom">
                     
                     <div class="settings-field-custom" id="profileNameGroup">
@@ -1489,13 +1794,13 @@
                   </div>
                 </div>
                 <div class="settings-panel">
-                  <div class="settings-panel-title">📍 Billing Address</div>
+                  <div class="settings-panel-title"><i class="fa-solid fa-map-location-dot"></i> Billing Address</div>
                   <textarea class="settings-input" style="resize:vertical;min-height:80px;">123, Anna Salai, Chennai, Tamil Nadu - 600002</textarea>
                 </div>
               </div>
               <div class="settings-stack">
                 <div class="settings-panel">
-                  <div class="settings-panel-title">🔔 Preferences</div>
+                  <div class="settings-panel-title"><i class="fa-solid fa-bell"></i> Preferences</div>
                   <div class="settings-option">
                     <div><b>Order updates</b><span>SMS and email alerts</span></div>
                     <button type="button" class="settings-toggle" aria-label="Order updates"></button>
@@ -1514,7 +1819,7 @@
                   </div>
                 </div>
                 <div class="settings-panel">
-                  <div class="settings-panel-title">📊 Charging Defaults</div>
+                  <div class="settings-panel-title"><i class="fa-solid fa-charging-station"></i> Charging Defaults</div>
                   <div class="mini-list">
                     <div class="mini-list-item"><b>Inspection Mode</b><span>On-Site</span></div>
                     <div class="mini-list-item"><b>Payment Mode</b><span>UPI / NetBanking</span></div>
@@ -1525,7 +1830,7 @@
               </div>
             </div>
             <div style="margin-top:18px;display:flex;gap:10px;">
-              <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
               <button type="button" class="btn" style="color:var(--text);border:1.5px solid var(--border);" onclick="show404()">Cancel</button>
             </div>
           </form>
@@ -1663,7 +1968,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('userEmail').textContent   = user.email || 'guest@example.com';
   document.getElementById('profileName').textContent = user.name  || 'Guest User';
   document.getElementById('profileEmail').textContent= user.email || 'guest@example.com';
-  document.getElementById('welcomeText').textContent = `Welcome Back, ${user.name || 'Friend'}! 👋`;
+  document.getElementById('welcomeText').textContent = `Welcome Back, ${user.name || 'Friend'}!`;
   document.getElementById('headerBreadcrumb').textContent = 'Home / Dashboard';
 
   const initial = (user.name || 'G').charAt(0).toUpperCase();

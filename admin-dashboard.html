@@ -82,9 +82,7 @@
 
     .sidebar {
       width: var(--sidebar-w);
-      background: linear-gradient(180deg, #1F2029 0%, #15161D 100%);
-      background: linear-gradient(180deg, var(--clr-primary) 0%, #0D4FAA 100%);
-      background: linear-gradient(180deg, #1A1D2E 0%, #12131A 100%);
+      background: #0f172a;
       height: calc(100vh - var(--topbar-h));
       display: flex;
       flex-direction: column;
@@ -187,9 +185,7 @@
       top: 0; left: 0; right: 0;
       width: 100%;
       height: var(--topbar-h);
-      background: #1F2029;
-      background: var(--clr-primary);
-      background: #1A1D2E;
+      background: #0f172a;
       border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex; align-items: center;
       padding: 0 1.5rem; gap: 1rem;
@@ -260,7 +256,7 @@
     .section-panel.active { display: block; }
 
     .welcome-banner {
-      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 60%, var(--clr-accent) 100%);
+      background: var(--clr-primary);
       border-radius: var(--r-xl); padding: 1.75rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
       gap: 1rem; margin-bottom: 1.75rem; overflow: hidden; position: relative;
@@ -306,12 +302,25 @@
 
     .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.75rem; }
     .stat-card {
-      background: var(--clr-surface); border: 1.5px solid var(--clr-border);
-      border-radius: var(--r-lg); padding: 1.25rem; display: flex;
-      flex-direction: column; gap: 0.75rem;
-      transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+      background: var(--clr-surface);
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-left: 4px solid var(--clr-primary);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
+      transition: all var(--dur-base) var(--ease);
     }
-    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .stat-card:hover {
+      box-shadow: 0 15px 35px rgba(13, 31, 45, 0.06);
+      transform: translateY(-4px);
+    }
+    .stat-card:nth-child(1) { border-left-color: #2D9B5E; }
+    .stat-card:nth-child(2) { border-left-color: #FFB300; }
+    .stat-card:nth-child(3) { border-left-color: #1565C0; }
+    .stat-card:nth-child(4) { border-left-color: #C53030; }
     .stat-card__header { display: flex; align-items: center; justify-content: space-between; }
     .stat-card__icon { width: 42px; height: 42px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
     .stat-card__icon--green { background: var(--clr-primary-pale); color: var(--clr-primary); }
@@ -331,7 +340,19 @@
     .dash-row--3col  { grid-template-columns: 2fr 1fr; }
     .dash-row--chart { grid-template-columns: 2fr 1fr; }
 
-    .dash-card { background: var(--clr-surface); border: 1.5px solid var(--clr-border); border-radius: var(--r-lg); overflow: hidden; }
+    .dash-card {
+      background: var(--clr-surface);
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-top: 4px solid var(--clr-primary);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
+      transition: all var(--dur-base) var(--ease);
+    }
+    .dash-card:hover {
+      box-shadow: 0 15px 35px rgba(13, 31, 45, 0.06);
+      transform: translateY(-2px);
+    }
     .dash-card__header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 1.25rem 0.9rem; border-bottom: 1px solid var(--clr-border);
@@ -391,17 +412,17 @@
     .dash-table-wrap::-webkit-scrollbar { height: 6px; display: block; }
     .dash-table-wrap::-webkit-scrollbar-track { background: var(--clr-border); border-radius: 10px; }
     .dash-table-wrap::-webkit-scrollbar-thumb { background: var(--clr-primary); border-radius: 10px; }
-    .dash-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .dash-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     .dash-table th {
-      text-align: left; padding: 0.7rem 1rem; font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.07em; color: var(--clr-text-muted);
-      background: var(--clr-bg); border-bottom: 1.5px solid var(--clr-border); white-space: nowrap;
+      text-align: left; padding: 1rem; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--clr-primary);
+      background: rgba(31, 110, 250, 0.04); border-bottom: 2px solid rgba(31, 110, 250, 0.08); white-space: nowrap;
     }
-    .dash-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--clr-border); color: var(--clr-text-body); vertical-align: middle; white-space: nowrap; }
+    .dash-table td { padding: 1rem; border-bottom: 1px solid rgba(0, 0, 0, 0.05); color: var(--clr-text-body); vertical-align: middle; white-space: nowrap; }
     .dash-table tr:last-child td { border-bottom: none; }
-    .dash-table tr:hover td { background: var(--clr-bg); }
-    .dash-table__name { display: flex; align-items: center; gap: 0.6rem; }
-    .dash-table__avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--clr-primary-pale); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: var(--clr-primary); flex-shrink: 0; }
+    .dash-table tr:hover td { background: rgba(31, 110, 250, 0.015); }
+    .dash-table__name { display: flex; align-items: center; gap: 0.75rem; }
+    .dash-table__avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--clr-primary-pale); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--clr-primary); flex-shrink: 0; border: 1.5px solid rgba(31, 110, 250, 0.15); }
     .dash-table__name-text { font-weight: 600; color: var(--clr-text-dark); }
     .dash-table__email { font-size: 0.72rem; color: var(--clr-text-muted); }
 
@@ -475,17 +496,34 @@
 
     .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
     .kpi-tile {
-      background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
-      border-radius: var(--r-lg); padding: 1.25rem; color: #fff;
-      transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease);
+      background: var(--clr-surface);
+      border: 1px solid rgba(31, 110, 250, 0.08);
+      border-left: 4px solid var(--clr-primary);
+      border-radius: 16px;
+      padding: 1.25rem;
+      color: var(--clr-text-body) !important;
+      transition: all var(--dur-base) var(--ease);
+      box-shadow: 0 8px 24px rgba(13, 31, 45, 0.02);
     }
-    .kpi-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-green); }
-    .kpi-tile--gold  { background: linear-gradient(135deg, #B07800 0%, var(--clr-accent) 100%); }
-    .kpi-tile--blue  { background: linear-gradient(135deg, #1565C0 0%, var(--clr-secondary-blue) 100%); }
-    .kpi-tile--red   { background: linear-gradient(135deg, #C53030 0%, #EF5350 100%); }
-    .kpi-tile__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.5rem; }
-    .kpi-tile__value { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; line-height: 1; margin-bottom: 0.25rem; }
-    .kpi-tile__sub   { font-size: 0.75rem; opacity: 0.75; }
+    .kpi-tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(13, 31, 45, 0.06);
+    }
+    .kpi-tile .kpi-tile__label { color: var(--clr-text-muted) !important; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .kpi-tile .kpi-tile__value { color: var(--clr-text-dark) !important; font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; line-height: 1; margin-bottom: 0.25rem; }
+    .kpi-tile .kpi-tile__sub { color: var(--clr-text-light) !important; font-size: 0.75rem; opacity: 0.85; }
+    
+    .kpi-tile:nth-child(1) { border-left-color: #2D9B5E; }
+    .kpi-tile:nth-child(1) .kpi-tile__label i { color: #2D9B5E; }
+    
+    .kpi-tile:nth-child(2) { border-left-color: #FFB300; }
+    .kpi-tile:nth-child(2) .kpi-tile__label i { color: #B07800; }
+    
+    .kpi-tile:nth-child(3) { border-left-color: #1565C0; }
+    .kpi-tile:nth-child(3) .kpi-tile__label i { color: #1565C0; }
+    
+    .kpi-tile:nth-child(4) { border-left-color: #C53030; }
+    .kpi-tile:nth-child(4) .kpi-tile__label i { color: #C53030; }
 
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
@@ -494,11 +532,15 @@
     .form-control {
       width: 100%;
       box-sizing: border-box;
-      padding: 0.6rem 0.9rem; border: 1.5px solid var(--clr-border); border-radius: var(--r-sm);
+      padding: 0.75rem 1rem; border: 1.5px solid var(--clr-border); border-radius: 10px;
       font-family: var(--font-body); font-size: 0.875rem; color: var(--clr-text-dark);
-      background: var(--clr-bg); transition: border-color var(--dur-fast) var(--ease); outline: none;
+      background: var(--clr-white); transition: all var(--dur-fast) var(--ease); outline: none;
     }
-    .form-control:focus { border-color: var(--clr-primary); }
+    .form-control:focus {
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 3px rgba(31, 110, 250, 0.1);
+      background: var(--clr-white);
+    }
     .form-control::placeholder { color: var(--clr-text-light); }
 
     @keyframes count-up { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
@@ -677,9 +719,233 @@
       .topbar__actions { gap: 0.3rem; }
       .topbar__logo img { height: 36px; }
     }
+
+  
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background-color: #0d0e12;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .preloader-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
+    .battery-loader {
+      width: 220px;
+      height: 90px;
+      border: 4px solid #ffffff;
+      border-radius: 16px;
+      position: relative;
+      padding: 6px;
+      box-shadow: 0 0 30px rgba(31, 110, 250, 0.25);
+      margin-bottom: 22px;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    
+    .battery-loader::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -13px;
+      transform: translateY(-50%);
+      width: 9px;
+      height: 30px;
+      background-color: #ffffff;
+      border-radius: 0 6px 6px 0;
+    }
+
+    
+    .battery-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1F6EFA 0%, #00D4FF 100%);
+      border-radius: 10px;
+      transition: width 0.15s ease-out;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    }
+
+    
+    .bolt-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.8rem;
+      color: #ffffff;
+      z-index: 5;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      animation: pulseBolt 1.2s ease-in-out infinite;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    
+    .loader-logo-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      z-index: 6;
+      pointer-events: none;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      opacity: 1;
+      transition: opacity 0.15s ease;
+    }
+
+    @keyframes pulseBolt {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; color: #00D4FF; text-shadow: 0 0 12px rgba(0, 212, 255, 0.8); }
+    }
+
+    
+    .charge-percentage {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .charge-status {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #8E94A8;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      animation: pulseText 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
+
+  
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="battery-loader">
+        <div class="battery-fill" id="preloaderFill"></div>
+        <div class="bolt-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="loader-logo-text" id="preloaderLogo">Stackly</div>
+      </div>
+      <div class="charge-percentage" id="preloaderPercent">0%</div>
+      <div class="charge-status">Connecting Charger...</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var preloader = document.getElementById('preloader');
+      if (!preloader) return;
+
+      var percentEl = document.getElementById('preloaderPercent');
+      var fillEl = document.getElementById('preloaderFill');
+      var statusEl = preloader.querySelector('.charge-status');
+      var logoEl = document.getElementById('preloaderLogo');
+      var boltEl = preloader.querySelector('.bolt-icon');
+      
+      if (!percentEl || !fillEl || !statusEl) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() { preloader.style.display = 'none'; }, 400);
+        return;
+      }
+
+      var count = 0;
+      var duration = 1600; 
+      var intervalTime = 16;
+      var step = 100 / (duration / intervalTime);
+      
+      var statusPhrases = [
+        "Connecting Charger...",
+        "Authenticating Vehicle...",
+        "Analyzing Battery Health...",
+        "Charging EV Stack...",
+        "Ready to Go!"
+      ];
+
+      if (logoEl) logoEl.style.opacity = '1';
+      if (boltEl) boltEl.style.opacity = '0';
+
+      var timer = setInterval(function() {
+        count += step;
+        if (count >= 100) {
+          count = 100;
+          clearInterval(timer);
+          percentEl.textContent = "100%";
+          fillEl.style.width = "100%";
+          statusEl.textContent = "Ready to Go!";
+          if (logoEl) logoEl.style.opacity = '0';
+          if (boltEl) boltEl.style.opacity = '1';
+          
+          setTimeout(function() {
+            preloader.classList.add('fade-out');
+            setTimeout(function() {
+              preloader.style.display = 'none';
+            }, 400);
+          }, 250);
+        } else {
+          var rounded = Math.floor(count);
+          percentEl.textContent = rounded + "%";
+          fillEl.style.width = rounded + "%";
+          
+          var logoOpacity = Math.max(0, 1 - count / 50);
+          var boltOpacity = Math.max(0, Math.min(1, (count - 35) / 45));
+          
+          if (logoEl) logoEl.style.opacity = logoOpacity;
+          if (boltEl) boltEl.style.opacity = boltOpacity;
+
+          if (rounded < 20) {
+            statusEl.textContent = statusPhrases[0];
+          } else if (rounded < 45) {
+            statusEl.textContent = statusPhrases[1];
+          } else if (rounded < 70) {
+            statusEl.textContent = statusPhrases[2];
+          } else {
+            statusEl.textContent = statusPhrases[3];
+          }
+        }
+      }, intervalTime);
+
+    
+      setTimeout(function() {
+        if (preloader && !preloader.classList.contains('fade-out')) {
+          preloader.classList.add('fade-out');
+          setTimeout(function() {
+            preloader.style.display = 'none';
+          }, 400);
+        }
+      }, 2500);
+    })();
+  </script>
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
@@ -724,7 +990,7 @@
 
     <div class="topbar__actions">
       <button class="topbar__icon-btn" onclick="showSection('notifications')" title="Notifications" aria-label="Notifications" style="font-size:1.15rem;">
-        🔔
+        <i class="fa-solid fa-bell"></i>
         <span class="topbar__notif-dot" style="top:4px;right:4px;"></span>
       </button>
     </div>
@@ -739,7 +1005,7 @@
           <div class="sidebar__user-label">Welcome back</div>
           <div class="sidebar__user-name" id="sidebarUserName">Admin User</div>
           <div class="sidebar__user-email" id="sidebarUserEmail">admin@stackly.com</div>
-          <span class="sidebar__user-role">🛡️ Admin</span>
+          <span class="sidebar__user-role"><i class="fa-solid fa-shield-halved" style="margin-right:4px;"></i> Admin</span>
         </div>
       </div>
     </div>
@@ -749,34 +1015,34 @@
       <div class="sidebar__nav-section">
         <div class="sidebar__nav-section-label">Main</div>
         <a class="sidebar__nav-item active" onclick="showSection('overview', 'Dashboard', this)" role="button" tabindex="0">
-          🏠 Overview
+          <i class="fa-solid fa-house"></i> Overview
         </a>
         <a class="sidebar__nav-item" onclick="showSection('analytics', 'Analytics', this)" role="button" tabindex="0">
-          📈 Analytics
+          <i class="fa-solid fa-chart-line"></i> Analytics
           <span class="sidebar__nav-badge">New</span>
         </a>
         <a class="sidebar__nav-item" onclick="showSection('transactions', 'Orders', this)" role="button" tabindex="0">
-          💸 Orders
+          <i class="fa-solid fa-money-bill-wave"></i> Orders
           <span class="sidebar__nav-badge red">12</span>
         </a>
         <a class="sidebar__nav-item" onclick="showSection('invoices', 'Charge Sessions', this)" role="button" tabindex="0">
-          ⚡ Charge Sessions
+          <i class="fa-solid fa-charging-station"></i> Charge Sessions
         </a>
       </div>
 
       <div class="sidebar__nav-section">
         <div class="sidebar__nav-section-label">Management</div>
         <a class="sidebar__nav-item" onclick="showSection('users', 'Users', this)" role="button" tabindex="0">
-          👥 Users
+          <i class="fa-solid fa-user-tie"></i> Users
         </a>
         <a class="sidebar__nav-item" onclick="showSection('clients', 'Customers', this)" role="button" tabindex="0">
-          🤝 Customers
+          <i class="fa-solid fa-users"></i> Customers
         </a>
         <a class="sidebar__nav-item" onclick="showSection('reports', 'Station Report', this)" role="button" tabindex="0">
-          📋 Station Report
+          <i class="fa-solid fa-clipboard-list"></i> Station Report
         </a>
         <a class="sidebar__nav-item" onclick="showSection('compliance', 'Infrastructure', this)" role="button" tabindex="0">
-          🛡️ Infrastructure
+          <i class="fa-solid fa-server"></i> Infrastructure
           <span class="sidebar__nav-badge red">3</span>
         </a>
       </div>
@@ -784,21 +1050,21 @@
       <div class="sidebar__nav-section">
         <div class="sidebar__nav-section-label">System</div>
         <a class="sidebar__nav-item" onclick="showSection('settings', 'Settings', this)" role="button" tabindex="0">
-          ⚙️ Settings
+          <i class="fa-solid fa-gears"></i> Settings
         </a>
         <a class="sidebar__nav-item" onclick="showSection('notifications', 'Notifications', this)" role="button" tabindex="0">
-          🔔 Notifications
+          <i class="fa-solid fa-bell"></i> Notifications
           <span class="sidebar__nav-badge">5</span>
         </a>
         <a class="sidebar__nav-item" onclick="showSection('support', 'Help & Support', this)" role="button" tabindex="0">
-          💬 Help & Support
+          <i class="fa-solid fa-circle-question"></i> Help & Support
         </a>
       </div>
     </nav>
 
     <div class="sidebar__bottom">
       <button class="sidebar__logout" onclick="handleLogout()">
-        <span style="font-size:1.1rem;">🚪</span>
+        <i class="fa-solid fa-right-from-bracket"></i>
         <span>Logout</span>
       </button>
     </div>

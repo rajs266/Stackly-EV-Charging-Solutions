@@ -9,11 +9,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=1.8" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="battery-loader">
+        <div class="battery-fill" id="preloaderFill"></div>
+        <div class="bolt-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="loader-logo-text" id="preloaderLogo">Stackly</div>
+      </div>
+      <div class="charge-percentage" id="preloaderPercent">0%</div>
+      <div class="charge-status">Connecting Charger...</div>
+    </div>
+  </div>
+  <script>
+    // Failsafe: Automatically remove loader after 2.5 seconds if it gets stuck
+    setTimeout(function() {
+      var preloader = document.getElementById('preloader');
+      if (preloader && !preloader.classList.contains('fade-out')) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() {
+          preloader.style.display = 'none';
+        }, 400);
+      }
+    }, 2500);
+  </script>
+
+  
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
       <a href="index.html" class="navbar__logo">
@@ -25,9 +50,11 @@
         <li><a href="service.html" class="active">Service</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="signin.html">Sign In</a></li>
-        <li><a href="signup.html" class="btn navbar__btn">Get Started</a></li>
       </ul>
+      <div class="navbar__actions">
+        <a href="signin.html" class="navbar__signin-btn">Sign In</a>
+        <a href="signup.html" class="btn navbar__btn">Get Started</a>
+      </div>
       <button class="navbar__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -42,14 +69,16 @@
       <a href="service.html" onclick="closeMobile()" class="active">Service</a>
       <a href="blog.html" onclick="closeMobile()">Blog</a>
       <a href="contact.html" onclick="closeMobile()">Contact</a>
-      <a href="signin.html" onclick="closeMobile()">Sign In</a>
-      <a href="signup.html" onclick="closeMobile()">Get Started</a>
     </nav>
+    <div class="mobile-menu__actions">
+      <a href="signin.html" onclick="closeMobile()" class="navbar__signin-btn">Sign In</a>
+      <a href="signup.html" onclick="closeMobile()" class="btn navbar__btn">Get Started</a>
+    </div>
   </div>
 
   <main id="main-content">
 
-    <!-- HERO -->
+    
     <section class="svc-hero" data-section="svc-hero">
       <div class="container">
         <div class="svc-hero__badge" data-animate="fade">
@@ -69,7 +98,7 @@
       </div>
     </section>
 
-    <!-- STATS BAND -->
+    
     <section class="stats-band" aria-label="Key service statistics">
       <div class="container">
         <div class="stats-band__grid" data-stagger>
@@ -93,7 +122,7 @@
       </div>
     </section>
 
-    <!-- SERVICES GRID -->
+    
     <section class="services" aria-labelledby="services-heading" style="background: var(--c-white); padding: var(--section-pad);">
       <div class="container">
         <header class="services__header" data-animate="fade">
@@ -162,7 +191,7 @@
       </div>
     </section>
 
-    <!-- EV INSTALLATION IMAGE BAND -->
+    
     <section class="service-img-band bg-light" aria-label="Installation service">
       <div class="container">
         <div class="service-img-band__grid">
@@ -185,7 +214,7 @@
       </div>
     </section>
 
-    <!-- WHY CHOOSE US -->
+    
     <section class="values" aria-labelledby="why-heading" style="background: var(--c-white);">
       <div class="container">
         <header class="values__header" data-animate="fade">
@@ -219,7 +248,7 @@
       </div>
     </section>
 
-    <!-- SOLAR CHARGING IMAGE BAND -->
+    
     <section class="service-img-band bg-light" aria-label="Solar charging">
       <div class="container">
         <div class="service-img-band__grid">
@@ -242,7 +271,7 @@
       </div>
     </section>
 
-    <!-- PROCESS -->
+    
     <section class="process" aria-labelledby="process-heading">
       <div class="container">
         <header class="process__header" data-animate="fade">
@@ -275,7 +304,7 @@
       </div>
     </section>
 
-    <!-- CTA BANNER -->
+    
     <section class="cta-banner" aria-labelledby="cta-heading">
       <div class="container">
         <div class="cta-banner__inner" data-animate="fade">
@@ -292,7 +321,7 @@
 
   </main>
 
-  <!-- UNIFIED FOOTER -->
+  
   <footer class="footer">
     <div class="footer__main">
       <div class="container">

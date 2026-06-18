@@ -9,11 +9,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=1.8" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="battery-loader">
+        <div class="battery-fill" id="preloaderFill"></div>
+        <div class="bolt-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="loader-logo-text" id="preloaderLogo">Stackly</div>
+      </div>
+      <div class="charge-percentage" id="preloaderPercent">0%</div>
+      <div class="charge-status">Connecting Charger...</div>
+    </div>
+  </div>
+  <script>
+    
+    setTimeout(function() {
+      var preloader = document.getElementById('preloader');
+      if (preloader && !preloader.classList.contains('fade-out')) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() {
+          preloader.style.display = 'none';
+        }, 400);
+      }
+    }, 2500);
+  </script>
+
+  
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
       <a href="index.html" class="navbar__logo">
@@ -25,16 +50,18 @@
         <li><a href="service.html">Service</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="signin.html">Sign In</a></li>
-        <li><a href="signup.html" class="btn navbar__btn">Get Started</a></li>
       </ul>
+      <div class="navbar__actions">
+        <a href="signin.html" class="navbar__signin-btn">Sign In</a>
+        <a href="signup.html" class="btn navbar__btn">Get Started</a>
+      </div>
       <button class="navbar__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
-  <!-- MOBILE MENU -->
+  
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-menu__glow" aria-hidden="true"></div>
     <nav class="mobile-menu__links" aria-label="Mobile navigation">
@@ -43,14 +70,16 @@
       <a href="service.html" onclick="closeMobile()">Service</a>
       <a href="blog.html" onclick="closeMobile()">Blog</a>
       <a href="contact.html" onclick="closeMobile()">Contact</a>
-      <a href="signin.html" onclick="closeMobile()">Sign In</a>
-      <a href="signup.html" onclick="closeMobile()">Get Started</a>
     </nav>
+    <div class="mobile-menu__actions">
+      <a href="signin.html" onclick="closeMobile()" class="navbar__signin-btn">Sign In</a>
+      <a href="signup.html" onclick="closeMobile()" class="btn navbar__btn">Get Started</a>
+    </div>
   </div>
 
   <main id="main-content">
 
-    <!-- HERO (UNTOUCHED) -->
+    
     <section class="hero" data-section="hero">
       <div class="container">
         <div class="hero__grid-3col">
@@ -76,11 +105,80 @@
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services bg-dark" data-animate="fade">
+    
+    <div class="brands-slider-container">
+      <div class="brands-slider-track">
+        
+        <div class="brands-slide">
+          <svg width="45" height="24" viewBox="0 0 100 40" fill="none" stroke="currentColor" stroke-width="4"><circle cx="20" cy="20" r="16" /><circle cx="38" cy="20" r="16" /><circle cx="56" cy="20" r="16" /><circle cx="74" cy="20" r="16" /></svg>
+          <span>Audi</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50,50 L50,22 A28,28 0 0,1 78,50 Z" /><path d="M50,50 L50,78 A28,28 0 0,1 22,50 Z" /></svg>
+          <span>BMW</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="5"/><polygon points="50,50 50,8 54,48" /><polygon points="50,50 50,8 46,48" opacity="0.6" /><polygon points="50,50 86,71 49,53" /><polygon points="50,50 86,71 53,47" opacity="0.6" /><polygon points="50,50 14,71 47,47" /><polygon points="50,50 14,71 51,53" opacity="0.6" /></svg>
+          <span>Mercedes</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><path d="M10,22 C40,30, 60,30, 90,22 C60,25, 40,25, 10,22 Z" /><path d="M15,27 C40,34, 60,34, 85,27 C75,35, 58,38, 56,44 L56,78 C56,81, 54,83, 50,83 C46,83, 44,81, 44,78 L44,44 C42,38, 25,35, 15,27 Z" /></svg>
+          <span>Tesla</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="44" /><polyline points="28,26 50,50 72,26" /><polyline points="18,50 36,82 50,54 64,82 82,50" /></svg>
+          <span>Volkswagen</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><circle cx="50" cy="50" r="44" /><path d="M50,75 L50,45 C50,30, 18,30, 22,55" /><path d="M50,45 C50,30, 82,30, 78,55" /></svg>
+          <span>Tata</span>
+        </div>
+        
+        
+        
+        
+        <div class="brands-slide">
+          <svg width="45" height="24" viewBox="0 0 100 40" fill="none" stroke="currentColor" stroke-width="4"><circle cx="20" cy="20" r="16" /><circle cx="38" cy="20" r="16" /><circle cx="56" cy="20" r="16" /><circle cx="74" cy="20" r="16" /></svg>
+          <span>Audi</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50,50 L50,22 A28,28 0 0,1 78,50 Z" /><path d="M50,50 L50,78 A28,28 0 0,1 22,50 Z" /></svg>
+          <span>BMW</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="5"/><polygon points="50,50 50,8 54,48" /><polygon points="50,50 50,8 46,48" opacity="0.6" /><polygon points="50,50 86,71 49,53" /><polygon points="50,50 86,71 53,47" opacity="0.6" /><polygon points="50,50 14,71 47,47" /><polygon points="50,50 14,71 51,53" opacity="0.6" /></svg>
+          <span>Mercedes</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="currentColor"><path d="M10,22 C40,30, 60,30, 90,22 C60,25, 40,25, 10,22 Z" /><path d="M15,27 C40,34, 60,34, 85,27 C75,35, 58,38, 56,44 L56,78 C56,81, 54,83, 50,83 C46,83, 44,81, 44,78 L44,44 C42,38, 25,35, 15,27 Z" /></svg>
+          <span>Tesla</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="44" /><polyline points="28,26 50,50 72,26" /><polyline points="18,50 36,82 50,54 64,82 82,50" /></svg>
+          <span>Volkswagen</span>
+        </div>
+        
+        <div class="brands-slide">
+          <svg width="24" height="24" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><circle cx="50" cy="50" r="44" /><path d="M50,75 L50,45 C50,30, 18,30, 22,55" /><path d="M50,45 C50,30, 82,30, 78,55" /></svg>
+          <span>Tata</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <section class="services" data-animate="fade">
       <div class="container">
-        <div class="sec-title light" data-animate="fade">
-          <span class="section-label" style="color:#93c5fd;">What We Offer</span>
+        <div class="sec-title" data-animate="fade">
+          <span class="section-label">What We Offer</span>
           <h2>We are the leading developer and installer of <em>modern electric</em> vehicle charging stations</h2>
         </div>
         <div class="services-grid" data-stagger>
@@ -112,7 +210,7 @@
       </div>
     </section>
 
-    <!-- STATS ICONS -->
+    
     <section class="stats-icons bg-green" data-animate="fade">
       <div class="container">
         <div class="stats-icons__grid" data-stagger>
@@ -144,7 +242,7 @@
       </div>
     </section>
 
-    <!-- FEATURES / ADVANTAGES -->
+    
     <section class="features" data-animate="fade">
       <div class="container">
         <div class="sec-title" data-animate="fade">
@@ -206,17 +304,8 @@
       </div>
     </section>
 
-    <!-- BRANDS -->
-    <section class="brands" data-animate="fade">
-      <div class="container">
-        <h3>Compatible with leading vehicle brands</h3>
-        <div class="brands-grid" data-stagger>
-          <h2>Audi</h2><h2>BMW</h2><h2>Mercedes</h2><h2>Tesla</h2><h2>Volkswagen</h2><h2>Tata</h2>
-        </div>
-      </div>
-    </section>
 
-    <!-- DARK STATS -->
+    
     <section class="dark-stats" data-animate="fade">
       <div class="container">
         <div class="dark-stats-grid" data-stagger>
@@ -234,9 +323,9 @@
       </div>
     </section>
 
-    <!-- CHARGING CARDS (SPLIT) -->
+    
     <section class="split-cards" data-animate="fade">
-      <div class="container" style="padding:0;">
+      <div class="container">
         <div class="split-grid">
           <div class="split-left" data-animate="left">
             <span class="section-label">RFID Access</span>
@@ -251,7 +340,7 @@
       </div>
     </section>
 
-    <!-- PRICING -->
+    
     <section class="pricing" data-animate="fade">
       <div class="container">
         <div class="sec-title" data-animate="fade">
@@ -297,7 +386,7 @@
       </div>
     </section>
 
-    <!-- APP SECTION -->
+    
     <section class="app-section bg-green" data-animate="fade">
       <div class="container">
         <div class="sec-title light" data-animate="fade">
@@ -309,8 +398,8 @@
             <h2>2,400 public charging stations in your smartphone</h2>
             <p>Find the nearest station, track your charging status, and manage payments easily from your phone — anywhere, anytime.</p>
             <div class="app-buttons">
-              <a href="contact.html" class="btn btn-light">App Store</a>
-              <a href="contact.html" class="btn btn-outline-white">Google Play</a>
+              <a href="404.html" class="btn btn-light">App Store</a>
+              <a href="404.html" class="btn btn-outline-white">Google Play</a>
             </div>
           </div>
           <div class="app-image-wrapper" data-animate="right">
@@ -320,7 +409,7 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS (NEW) -->
+    
     <section class="testimonials" data-animate="fade">
       <div class="container">
         <div class="sec-title light" data-animate="fade">
@@ -366,7 +455,7 @@
       </div>
     </section>
 
-    <!-- BLOG -->
+    
     <section class="blog" data-animate="fade">
       <div class="container">
         <div class="sec-title" data-animate="fade">
@@ -398,7 +487,7 @@
 
   </main>
 
-  <!-- UNIFIED FOOTER -->
+  
   <footer class="footer">
     <div class="footer__main">
       <div class="container">

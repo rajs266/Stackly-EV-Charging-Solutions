@@ -9,11 +9,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=1.8" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  
+  <div id="preloader">
+    <div class="preloader-content">
+      <div class="battery-loader">
+        <div class="battery-fill" id="preloaderFill"></div>
+        <div class="bolt-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div class="loader-logo-text" id="preloaderLogo">Stackly</div>
+      </div>
+      <div class="charge-percentage" id="preloaderPercent">0%</div>
+      <div class="charge-status">Connecting Charger...</div>
+    </div>
+  </div>
+  <script>
+    
+    setTimeout(function() {
+      var preloader = document.getElementById('preloader');
+      if (preloader && !preloader.classList.contains('fade-out')) {
+        preloader.classList.add('fade-out');
+        setTimeout(function() {
+          preloader.style.display = 'none';
+        }, 400);
+      }
+    }, 2500);
+  </script>
+
+  
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
       <a href="index.html" class="navbar__logo">
@@ -25,16 +50,18 @@
         <li><a href="service.html">Service</a></li>
         <li><a href="blog.html">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><a href="signin.html">Sign In</a></li>
-        <li><a href="signup.html" class="btn navbar__btn">Get Started</a></li>
       </ul>
+      <div class="navbar__actions">
+        <a href="signin.html" class="navbar__signin-btn">Sign In</a>
+        <a href="signup.html" class="btn navbar__btn">Get Started</a>
+      </div>
       <button class="navbar__burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
-  <!-- MOBILE MENU -->
+  
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <div class="mobile-menu__glow" aria-hidden="true"></div>
     <nav class="mobile-menu__links" aria-label="Mobile navigation">
@@ -43,14 +70,16 @@
       <a href="service.html" onclick="closeMobile()">Service</a>
       <a href="blog.html" onclick="closeMobile()">Blog</a>
       <a href="contact.html" onclick="closeMobile()">Contact</a>
-      <a href="signin.html" onclick="closeMobile()">Sign In</a>
-      <a href="signup.html" onclick="closeMobile()">Get Started</a>
     </nav>
+    <div class="mobile-menu__actions">
+      <a href="signin.html" onclick="closeMobile()" class="navbar__signin-btn">Sign In</a>
+      <a href="signup.html" onclick="closeMobile()" class="btn navbar__btn">Get Started</a>
+    </div>
   </div>
 
   <main id="main-content">
 
-    <!-- HERO -->
+    
     <section class="page-hero" aria-labelledby="about-hero-heading">
       <div class="container">
         <div class="page-hero__inner" data-animate="fade">
@@ -77,11 +106,11 @@
       </div>
     </section>
 
-    <!-- MISSION SECTION -->
+    
     <section class="mission" aria-labelledby="mission-heading">
       <div class="container">
         <div class="mission__grid">
-          <!-- Metric Cards -->
+          
           <div class="mission__visual">
             <div class="mission__card-stack" data-stagger>
               <div class="mission__metric" data-animate="left">
@@ -122,7 +151,7 @@
               </div>
             </div>
           </div>
-          <!-- Mission Text -->
+          
           <div class="mission__content" data-animate="right">
             <span class="section-label">Our Mission</span>
             <h2 class="mission__heading" id="mission-heading">
@@ -146,7 +175,7 @@
       </div>
     </section>
 
-    <!-- INSTALLATION IMAGE BAND -->
+    
     <section class="service-img-band bg-light" aria-label="EV installation">
       <div class="container">
         <div class="service-img-band__grid">
@@ -169,7 +198,7 @@
       </div>
     </section>
 
-    <!-- TIMELINE / STORY -->
+    
     <section class="story" aria-labelledby="story-heading">
       <div class="container">
         <header class="story__header" data-animate="fade">
@@ -239,7 +268,7 @@
       </div>
     </section>
 
-    <!-- CORE VALUES -->
+    
     <section class="values" aria-labelledby="values-heading">
       <div class="container">
         <header class="values__header" data-animate="fade">
@@ -296,7 +325,7 @@
       </div>
     </section>
 
-    <!-- TEAM -->
+    
     <section class="team" aria-labelledby="team-heading">
       <div class="container">
         <header class="team__header" data-animate="fade">
@@ -306,25 +335,33 @@
         </header>
         <div class="team__grid" data-stagger>
           <article class="team-card" data-animate="fade">
-            <div class="team-card__avatar" aria-hidden="true">AK</div>
+            <div class="team-card__avatar">
+              <img src="assets/team_arjun.jpg" alt="Arjun Krishnamurthy" class="team-card__img" />
+            </div>
             <h3 class="team-card__name">Arjun Krishnamurthy</h3>
             <div class="team-card__role">CEO &amp; Co-Founder</div>
             <p class="team-card__bio">12 years in power systems engineering. Former lead at CPCB-certified EV testing lab. Drives Stackly's product roadmap and investor relations.</p>
           </article>
           <article class="team-card" data-animate="fade">
-            <div class="team-card__avatar" aria-hidden="true">PR</div>
+            <div class="team-card__avatar">
+              <img src="assets/team_priya.jpg" alt="Priya Raghunathan" class="team-card__img" />
+            </div>
             <h3 class="team-card__name">Priya Raghunathan</h3>
             <div class="team-card__role">CTO &amp; Co-Founder</div>
             <p class="team-card__bio">Built OCPP integrations at a Berlin-based EV startup. Leads all cloud platform, firmware, and cybersecurity engineering at Stackly.</p>
           </article>
           <article class="team-card" data-animate="fade">
-            <div class="team-card__avatar" aria-hidden="true">VM</div>
+            <div class="team-card__avatar">
+              <img src="assets/team_vikram.jpg" alt="Vikram Murugesan" class="team-card__img" />
+            </div>
             <h3 class="team-card__name">Vikram Murugesan</h3>
             <div class="team-card__role">Head of Operations</div>
             <p class="team-card__bio">Oversees field installation teams, SLA compliance, and supply-chain operations across all 50+ cities. Formerly with a Tier-1 EPC contractor.</p>
           </article>
           <article class="team-card" data-animate="fade">
-            <div class="team-card__avatar" aria-hidden="true">SN</div>
+            <div class="team-card__avatar">
+              <img src="assets/team_sneha.jpg" alt="Sneha Nair" class="team-card__img" />
+            </div>
             <h3 class="team-card__name">Sneha Nair</h3>
             <div class="team-card__role">VP Growth &amp; Partnerships</div>
             <p class="team-card__bio">Leads enterprise sales and OEM partnerships. Negotiated Stackly's first state government smart-city contracts in Tamil Nadu and Karnataka.</p>
@@ -333,7 +370,7 @@
       </div>
     </section>
 
-    <!-- PARTNERS / CERTIFICATIONS -->
+    
     <section class="partners" aria-label="Technology and certification partners">
       <div class="container">
         <p class="partners__label" data-animate="fade">Certified &amp; trusted by</p>
@@ -349,7 +386,7 @@
       </div>
     </section>
 
-    <!-- SUPPORT IMAGE BAND -->
+    
     <section class="service-img-band bg-white" aria-label="Customer support">
       <div class="container">
         <div class="service-img-band__grid">
@@ -372,7 +409,7 @@
       </div>
     </section>
 
-    <!-- ABOUT CTA -->
+    
     <section class="about-cta" aria-labelledby="about-cta-heading">
       <div class="container">
         <div class="about-cta__inner" data-animate="fade">
@@ -394,7 +431,7 @@
 
   </main>
 
-  <!-- UNIFIED FOOTER -->
+  
   <footer class="footer">
     <div class="footer__main">
       <div class="container">
